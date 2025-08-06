@@ -1,0 +1,21 @@
+techfeed-monorepo/
+├── apps/
+│   ├── frontend/          # Next.js アプリ（UI）
+│   ├── backend-api/       # Spring Boot アプリ（REST API）
+│   └── rss-fetcher/       # Lambda (Java) バッチ処理
+│
+├── packages/
+│   ├── shared-models/     # DBエンティティ定義などの共通モデル（Java & TypeScript 用）
+│   ├── shared-utils/      # RSS解析、URL抽出、日付変換などのユーティリティ
+│   └── summarizer-client/ # AI要約の呼び出し共通クライアント（将来のBedrock連携）
+│
+├── infra/
+│   └── cdk/               # AWS CDK（TypeScript）によるインフラコード
+│
+├── scripts/               # デプロイ・ビルド・CI用スクリプト
+├── .github/
+│   └── workflows/         # GitHub Actions（CI/CD）
+├── docker/                # DockerfileやCompose定義（ローカル開発用）
+├── README.md
+├── package.json           # 全体管理用（npm workspace）
+└── taskfile.yml           # Taskランナー（任意）
