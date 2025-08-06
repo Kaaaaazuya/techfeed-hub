@@ -1,4 +1,5 @@
-techfeed-monorepo/
+techfeed-hub/
+├── docs/
 ├── apps/
 │   ├── frontend/          # Next.js アプリ（UI）
 │   ├── backend-api/       # Spring Boot アプリ（REST API）
