@@ -57,6 +57,36 @@ tasks:
     cmds:
       - docker-compose exec redis redis-cli
 
+  # API Server operations
+  api-build:
+    desc: Build API server Docker image
+    cmds:
+      - docker-compose build api-server
+
+  api-up:
+    desc: Start API server with database
+    deps: [db-up]
+    cmds:
+      - docker-compose up -d api-server
+
+  api-down:
+    desc: Stop API server
+    cmds:
+      - docker-compose stop api-server
+
+  api-logs:
+    desc: Show API server logs
+    cmds:
+      - docker-compose logs -f api-server
+
+  api-test:
+    desc: Test API endpoints
+    deps: [api-up]
+    cmds:
+      - sleep 10
+      - curl -s http://localhost:8080/actuator/health | jq .
+      - curl -s "http://localhost:8080/api/v1/articles?page=0&size=5" | jq .
+
   # RSS Fetcher batch operations
   rss-batch-today:
     desc: Run RSS batch processing for today using Docker
@@ -120,6 +150,13 @@ tasks:
         echo "  task db-restart  - Restart database services"
         echo "  task db-status   - Check database status"
         echo "  task db-logs     - Show database logs"
+        echo ""
+        echo "API Server:"
+        echo "  task api-build       - Build API server Docker image"
+        echo "  task api-up          - Start API server with database"
+        echo "  task api-down        - Stop API server"
+        echo "  task api-logs        - Show API server logs"
+        echo "  task api-test        - Test API endpoints"
         echo ""
         echo "RSS Fetcher (Docker):"
         echo "  task rss-build       - Build RSS fetcher Docker image"

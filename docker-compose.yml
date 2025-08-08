@@ -40,6 +40,33 @@ services:
       timeout: 5s
       retries: 5
 
+  api-server:
+    build:
+      context: ./apps/api-server
+      dockerfile: Dockerfile
+    container_name: techfeed-api-server
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - techfeed-network
+    environment:
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=techfeed_hub
+      - DB_USERNAME=techfeed_user
+      - DB_PASSWORD=techfeed_password
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8080/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
   rss-fetcher:
     build:
       context: ./apps/rss-fetcher
