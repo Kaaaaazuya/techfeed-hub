@@ -21,6 +21,12 @@ dependencies {
 
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
+    // rome
+    implementation("com.rometools:rome:1.18.0")
+
+    // slf4j
+    implementation("org.slf4j:slf4j-simple:2.0.12")
+
     // This dependency is used by the application.
     implementation(libs.guava)
 }
@@ -34,10 +40,18 @@ java {
 
 application {
     // Define the main class for the application.
-    mainClass = "org.example.App"
+    mainClass = "rssfetcher.RssReader"
 }
 
 tasks.named<Test>("test") {
     // Use JUnit Platform for unit tests.
     useJUnitPlatform()
+}
+
+tasks.jar {
+    manifest {
+        attributes("Main-Class" to "rssfetcher.RssReader")
+    }
+    from(configurations.runtimeClasspath.get().map { if (it.isDirectory) it else zipTree(it) })
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }

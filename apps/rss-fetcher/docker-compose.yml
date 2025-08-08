@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  rss-reader:
+    build: .
+    container_name: rss-reader
+    environment:
+      - TZ=Asia/Tokyo
+    restart: unless-stopped
+    volumes:
+      - ./logs:/app/logs  # ログファイルをホストにマウント（必要に応じて）
+    networks:
+      - rss-network
+
+networks:
+  rss-network:
+    driver: bridge

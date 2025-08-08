@@ -1,0 +1,125 @@
+version: '3'
+
+vars:
+  APP_NAME: rss-reader
+
+tasks:
+  default:
+    desc: Show available tasks
+    cmds:
+      - task --list
+
+  build:
+    desc: Build the Java application using Gradle
+    cmds:
+      - ./gradlew build
+    sources:
+      - app/src/**/*.java
+      - app/build.gradle.kts
+      - gradle.properties
+      - settings.gradle.kts
+    generates:
+      - app/build/libs/*.jar
+
+  test:
+    desc: Run tests using Gradle
+    cmds:
+      - ./gradlew test
+    sources:
+      - app/src/**/*.java
+      - app/build.gradle.kts
+
+  clean:
+    desc: Clean build artifacts
+    cmds:
+      - ./gradlew clean
+
+  run:
+    desc: Run the application locally
+    deps: [build]
+    cmds:
+      - ./gradlew run
+
+  run-jar:
+    desc: Run the application from the built jar
+    deps: [build]
+    cmds:
+      - java -jar app/build/libs/app.jar
+
+  docker-build:
+    desc: Build Docker image
+    cmds:
+      - docker build -t {{.APP_NAME}} .
+    sources:
+      - Dockerfile
+      - app/src/**/*.java
+      - app/build.gradle.kts
+      - gradle.properties
+      - settings.gradle.kts
+
+  docker-run:
+    desc: Run the application in Docker container
+    deps: [docker-build]
+    cmds:
+      - docker run --rm {{.APP_NAME}}
+
+  docker-up:
+    desc: Start the application using docker-compose
+    cmds:
+      - docker-compose up --build
+
+  docker-down:
+    desc: Stop docker-compose services
+    cmds:
+      - docker-compose down
+
+  docker-logs:
+    desc: Show docker-compose logs
+    cmds:
+      - docker-compose logs -f
+
+  dev:
+    desc: Development mode - rebuild and run on file changes
+    watch: true
+    sources:
+      - app/src/**/*.java
+    cmds:
+      - task: run
+
+  lint:
+    desc: Run code quality checks
+    cmds:
+      - ./gradlew check
+
+  deps:
+    desc: Download and resolve dependencies
+    cmds:
+      - ./gradlew dependencies
+
+  gradle-wrapper:
+    desc: Update Gradle wrapper
+    cmds:
+      - ./gradlew wrapper --gradle-version=8.10
+
+  help:
+    desc: Show detailed help for common tasks
+    cmds:
+      - |
+        echo "RSS Reader Taskfile Commands:"
+        echo ""
+        echo "Development:"
+        echo "  task build       - Build the application"
+        echo "  task test        - Run tests"
+        echo "  task run         - Run the application locally"
+        echo "  task dev         - Development mode with file watching"
+        echo ""
+        echo "Docker:"
+        echo "  task docker-build - Build Docker image"
+        echo "  task docker-run   - Run in Docker container"
+        echo "  task docker-up    - Start with docker-compose"
+        echo "  task docker-down  - Stop docker-compose"
+        echo ""
+        echo "Maintenance:"
+        echo "  task clean       - Clean build artifacts"
+        echo "  task lint        - Run code quality checks"
+        echo "  task deps        - Download dependencies"
