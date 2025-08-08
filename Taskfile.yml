@@ -57,6 +57,30 @@ tasks:
     cmds:
       - docker-compose exec redis redis-cli
 
+  # RSS Fetcher batch operations
+  rss-batch-today:
+    desc: Run RSS batch processing for today using Docker
+    deps: [db-up]
+    cmds:
+      - docker-compose --profile batch run --rm rss-fetcher
+
+  rss-batch-date:
+    desc: Run RSS batch processing for specific date using Docker
+    deps: [db-up]
+    cmds:
+      - docker-compose --profile batch run --rm rss-fetcher {{.CLI_ARGS}}
+
+  rss-batch-all:
+    desc: Run RSS batch processing for all articles using Docker
+    deps: [db-up]
+    cmds:
+      - docker-compose --profile batch run --rm rss-fetcher all
+
+  rss-build:
+    desc: Build RSS fetcher Docker image
+    cmds:
+      - docker-compose build rss-fetcher
+
   # Full stack operations
   up:
     desc: Start all services
@@ -85,10 +109,10 @@ tasks:
       - docker-compose logs -f
 
   help:
-    desc: Show detailed help for database tasks
+    desc: Show detailed help for all tasks
     cmds:
       - |
-        echo "TechFeed Hub Database Management:"
+        echo "TechFeed Hub Task Management:"
         echo ""
         echo "Database Services:"
         echo "  task db-up       - Start PostgreSQL and Redis"
@@ -96,6 +120,12 @@ tasks:
         echo "  task db-restart  - Restart database services"
         echo "  task db-status   - Check database status"
         echo "  task db-logs     - Show database logs"
+        echo ""
+        echo "RSS Fetcher (Docker):"
+        echo "  task rss-build       - Build RSS fetcher Docker image"
+        echo "  task rss-batch-today - Process today's RSS articles"
+        echo "  task rss-batch-all   - Process all RSS articles"
+        echo "  task rss-batch-date -- 2025-08-07 - Process specific date"
         echo ""
         echo "Database Access:"
         echo "  task db-shell-postgres - Connect to PostgreSQL"

@@ -40,9 +40,33 @@ services:
       timeout: 5s
       retries: 5
 
+  rss-fetcher:
+    build:
+      context: ./apps/rss-fetcher
+      dockerfile: Dockerfile
+    container_name: techfeed-rss-fetcher
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - techfeed-network
+    environment:
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=techfeed_hub
+      - DB_USER=techfeed_user
+      - DB_PASSWORD=techfeed_password
+    volumes:
+      - rss_logs:/app/logs
+    profiles:
+      - batch
+
 volumes:
   postgres_data:
   redis_data:
+  rss_logs:
 
 networks:
   techfeed-network:

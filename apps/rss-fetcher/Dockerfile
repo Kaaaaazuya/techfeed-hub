@@ -30,5 +30,12 @@ WORKDIR /app
 # Copy the built jar from the build stage
 COPY --from=build /app/app/build/libs/*.jar app.jar
 
-# Run the application
+# Create a non-root user
+RUN groupadd -r appuser && useradd -r -g appuser appuser
+RUN chown -R appuser:appuser /app
+USER appuser
+
+# Default command runs the batch processor for today
+# Can be overridden with docker run arguments
 ENTRYPOINT ["java", "-jar", "app.jar"]
+CMD []

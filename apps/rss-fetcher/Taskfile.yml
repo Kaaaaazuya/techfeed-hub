@@ -101,6 +101,24 @@ tasks:
     cmds:
       - ./gradlew wrapper --gradle-version=8.10
 
+  batch:
+    desc: Run RSS batch processor with date filtering
+    deps: [build]
+    cmds:
+      - java -cp "app/build/libs/app.jar" rssfetcher.batch.RssBatchProcessor {{.CLI_ARGS}}
+
+  batch-today:
+    desc: Process RSS feeds for today only
+    deps: [build]
+    cmds:
+      - java -cp "app/build/libs/app.jar" rssfetcher.batch.RssBatchProcessor
+
+  batch-all:
+    desc: Process all RSS feeds (no date filtering)
+    deps: [build]
+    cmds:
+      - java -cp "app/build/libs/app.jar" rssfetcher.batch.RssBatchProcessor all
+
   help:
     desc: Show detailed help for common tasks
     cmds:
@@ -112,6 +130,11 @@ tasks:
         echo "  task test        - Run tests"
         echo "  task run         - Run the application locally"
         echo "  task dev         - Development mode with file watching"
+        echo ""
+        echo "Batch Processing:"
+        echo "  task batch-today     - Process today's RSS articles"
+        echo "  task batch-all       - Process all RSS articles"
+        echo "  task batch -- 2024-01-15  - Process articles for specific date"
         echo ""
         echo "Docker:"
         echo "  task docker-build - Build Docker image"

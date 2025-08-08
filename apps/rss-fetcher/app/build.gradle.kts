@@ -29,6 +29,12 @@ dependencies {
 
     // This dependency is used by the application.
     implementation(libs.guava)
+
+    // Database
+    implementation("org.postgresql:postgresql:42.7.2")
+    implementation("org.hibernate:hibernate-core:6.4.1.Final")
+    implementation("jakarta.persistence:jakarta.persistence-api:3.1.0")
+    implementation("com.zaxxer:HikariCP:5.0.1")
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
@@ -40,7 +46,7 @@ java {
 
 application {
     // Define the main class for the application.
-    mainClass = "rssfetcher.RssReader"
+    mainClass = "rssfetcher.batch.RssBatchProcessor"
 }
 
 tasks.named<Test>("test") {
@@ -50,7 +56,7 @@ tasks.named<Test>("test") {
 
 tasks.jar {
     manifest {
-        attributes("Main-Class" to "rssfetcher.RssReader")
+        attributes("Main-Class" to "rssfetcher.batch.RssBatchProcessor")
     }
     from(configurations.runtimeClasspath.get().map { if (it.isDirectory) it else zipTree(it) })
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
