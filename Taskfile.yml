@@ -1,0 +1,109 @@
+version: '3'
+
+vars:
+  PROJECT_NAME: techfeed-hub
+
+tasks:
+  default:
+    desc: Show available tasks
+    cmds:
+      - task --list
+
+  # Database tasks
+  db-up:
+    desc: Start database services (PostgreSQL and Redis)
+    cmds:
+      - docker-compose up -d postgres redis
+
+  db-down:
+    desc: Stop database services
+    cmds:
+      - docker-compose down
+
+  db-restart:
+    desc: Restart database services
+    cmds:
+      - task: db-down
+      - task: db-up
+
+  db-status:
+    desc: Check database services status
+    cmds:
+      - docker-compose ps postgres redis
+
+  db-logs:
+    desc: Show database logs
+    cmds:
+      - docker-compose logs -f postgres redis
+
+  db-logs-postgres:
+    desc: Show PostgreSQL logs only
+    cmds:
+      - docker-compose logs -f postgres
+
+  db-logs-redis:
+    desc: Show Redis logs only
+    cmds:
+      - docker-compose logs -f redis
+
+  # Database management
+  db-shell-postgres:
+    desc: Connect to PostgreSQL shell
+    cmds:
+      - docker-compose exec postgres psql -U techfeed_user -d techfeed_hub
+
+  db-shell-redis:
+    desc: Connect to Redis CLI
+    cmds:
+      - docker-compose exec redis redis-cli
+
+  # Full stack operations
+  up:
+    desc: Start all services
+    cmds:
+      - docker-compose up -d
+
+  down:
+    desc: Stop all services
+    cmds:
+      - docker-compose down
+
+  restart:
+    desc: Restart all services
+    cmds:
+      - task: down
+      - task: up
+
+  status:
+    desc: Check status of all services
+    cmds:
+      - docker-compose ps
+
+  logs:
+    desc: Show logs for all services
+    cmds:
+      - docker-compose logs -f
+
+  help:
+    desc: Show detailed help for database tasks
+    cmds:
+      - |
+        echo "TechFeed Hub Database Management:"
+        echo ""
+        echo "Database Services:"
+        echo "  task db-up       - Start PostgreSQL and Redis"
+        echo "  task db-down     - Stop database services"
+        echo "  task db-restart  - Restart database services"
+        echo "  task db-status   - Check database status"
+        echo "  task db-logs     - Show database logs"
+        echo ""
+        echo "Database Access:"
+        echo "  task db-shell-postgres - Connect to PostgreSQL"
+        echo "  task db-shell-redis    - Connect to Redis CLI"
+        echo ""
+        echo "Full Stack:"
+        echo "  task up          - Start all services"
+        echo "  task down        - Stop all services"
+        echo "  task restart     - Restart all services"
+        echo "  task status      - Check all services status"
+        echo "  task logs        - Show all logs"
