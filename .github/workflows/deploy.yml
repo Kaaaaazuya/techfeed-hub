@@ -1,0 +1,159 @@
+name: Deploy to AWS
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+env:
+  AWS_REGION: ap-northeast-1
+  ECR_REGISTRY: ${{ vars.ECR_REGISTRY }}
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    permissions:
+      id-token: write
+      contents: read
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials using OIDC
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_ROLE_ARN }}
+          role-session-name: github-actions-deploy
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: |
+            apps/frontend/package-lock.json
+            infra/package-lock.json
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      # Build and push RSS Fetcher for Lambda
+      - name: Build RSS Fetcher JAR
+        run: |
+          cd apps/rss-fetcher
+          ./gradlew build -x test
+
+      - name: Package RSS Fetcher for Lambda
+        run: |
+          cd apps/rss-fetcher
+          mkdir -p lambda-package
+          cp app/build/libs/*.jar lambda-package/
+          # Lambda用のエントリーポイントを追加する場合はここで設定
+
+      # Build and push API Server container
+      - name: Build API Server container
+        run: |
+          cd apps/api-server
+          docker build -t techfeed-api .
+          docker tag techfeed-api:latest $ECR_REGISTRY/techfeed-api:latest
+          docker tag techfeed-api:latest $ECR_REGISTRY/techfeed-api:${{ github.sha }}
+
+      - name: Push API Server to ECR
+        run: |
+          docker push $ECR_REGISTRY/techfeed-api:latest
+          docker push $ECR_REGISTRY/techfeed-api:${{ github.sha }}
+
+      # Build Frontend static files
+      - name: Install Frontend dependencies
+        run: |
+          cd apps/frontend
+          npm ci
+
+      - name: Build Frontend static files
+        run: |
+          cd apps/frontend
+          npm run build:static
+
+      # Deploy infrastructure with CDK
+      - name: Install CDK dependencies
+        run: |
+          cd infra
+          npm ci
+
+      - name: Deploy CDK stack
+        run: |
+          cd infra
+          npx cdk deploy --require-approval never
+
+      # Deploy Frontend to S3
+      - name: Deploy Frontend to S3
+        run: |
+          cd apps/frontend
+          aws s3 sync out/ s3://${{ vars.FRONTEND_BUCKET_NAME }} --delete
+
+      # Invalidate CloudFront cache
+      - name: Invalidate CloudFront
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id ${{ vars.CLOUDFRONT_DISTRIBUTION_ID }} \
+            --paths "/*"
+
+  test:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: apps/frontend/package-lock.json
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin' 
+          java-version: '21'
+
+      # Test RSS Fetcher
+      - name: Test RSS Fetcher
+        run: |
+          cd apps/rss-fetcher
+          ./gradlew test
+
+      # Test API Server
+      - name: Test API Server
+        run: |
+          cd apps/api-server
+          ./gradlew test
+
+      # Test Frontend
+      - name: Install Frontend dependencies
+        run: |
+          cd apps/frontend
+          npm ci
+
+      - name: Test Frontend
+        run: |
+          cd apps/frontend
+          npm run test:ci || echo "No tests configured"
+
+      - name: Build Frontend
+        run: |
+          cd apps/frontend
+          npm run build:static

@@ -189,6 +189,68 @@ tasks:
       - echo "Frontend built successfully. Testing static serve..."
       - timeout 10s npm run serve:static || echo "Static server test completed"
 
+  # CDK Infrastructure operations
+  cdk-install:
+    desc: Install CDK dependencies
+    dir: infra
+    cmds:
+      - npm install
+
+  cdk-build:
+    desc: Build CDK project
+    dir: infra
+    cmds:
+      - npm run build
+
+  cdk-test:
+    desc: Run all CDK tests
+    dir: infra
+    cmds:
+      - npm test
+
+  cdk-test-unit:
+    desc: Run CDK unit tests only
+    dir: infra
+    cmds:
+      - npx jest test/infra.test.ts
+
+  cdk-test-integration:
+    desc: Run CDK integration tests only
+    dir: infra
+    cmds:
+      - npx jest test/techfeed-stack.integration.test.ts
+
+  cdk-test-watch:
+    desc: Run CDK tests in watch mode
+    dir: infra
+    cmds:
+      - npx jest --watch
+
+  cdk-diff:
+    desc: Show CDK deployment differences
+    dir: infra
+    cmds:
+      - npm run cdk diff
+
+  cdk-synth:
+    desc: Synthesize CDK templates
+    dir: infra
+    cmds:
+      - npm run cdk synth
+
+  cdk-deploy:
+    desc: Deploy CDK stack (requires AWS credentials)
+    dir: infra
+    deps: [cdk-test-unit]
+    cmds:
+      - npm run cdk deploy
+
+  cdk-destroy:
+    desc: Destroy CDK stack (requires AWS credentials)
+    dir: infra
+    cmds:
+      - npm run cdk destroy
+
   # Full stack operations
   up:
     desc: Start all services
@@ -257,6 +319,18 @@ tasks:
         echo "  task frontend-format       - Format code"
         echo "  task frontend-analyze      - Analyze bundle size"
         echo "  task frontend-test-build   - Test static build locally"
+        echo ""
+        echo "CDK Infrastructure:"
+        echo "  task cdk-install         - Install CDK dependencies"
+        echo "  task cdk-build          - Build CDK project"
+        echo "  task cdk-test           - Run all CDK tests"
+        echo "  task cdk-test-unit      - Run CDK unit tests only"
+        echo "  task cdk-test-integration - Run CDK integration tests only"
+        echo "  task cdk-test-watch     - Run CDK tests in watch mode"
+        echo "  task cdk-diff           - Show CDK deployment differences"
+        echo "  task cdk-synth          - Synthesize CDK templates"
+        echo "  task cdk-deploy         - Deploy CDK stack (with tests)"
+        echo "  task cdk-destroy        - Destroy CDK stack"
         echo ""
         echo "Database Access:"
         echo "  task db-shell-postgres - Connect to PostgreSQL"

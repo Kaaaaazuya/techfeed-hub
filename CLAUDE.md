@@ -51,6 +51,20 @@ task rss-batch-all       # Process all RSS articles
 task rss-batch-date -- 2025-08-07  # Process articles for specific date
 ```
 
+#### CDK Infrastructure Operations
+```bash
+task cdk-install         # Install CDK dependencies
+task cdk-build          # Build CDK project
+task cdk-test           # Run all CDK tests
+task cdk-test-unit      # Run CDK unit tests only
+task cdk-test-integration # Run CDK integration tests only
+task cdk-test-watch     # Run CDK tests in watch mode
+task cdk-diff           # Show CDK deployment differences
+task cdk-synth          # Synthesize CDK templates
+task cdk-deploy         # Deploy CDK stack (with pre-deployment tests)
+task cdk-destroy        # Destroy CDK stack
+```
+
 #### Full Stack Operations
 ```bash
 task up            # Start all services

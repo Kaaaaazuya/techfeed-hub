@@ -35,6 +35,10 @@ dependencies {
     implementation("org.hibernate:hibernate-core:6.4.1.Final")
     implementation("jakarta.persistence:jakarta.persistence-api:3.1.0")
     implementation("com.zaxxer:HikariCP:5.0.1")
+    
+    // AWS Lambda Core
+    implementation("com.amazonaws:aws-lambda-java-core:1.2.3")
+    implementation("com.amazonaws:aws-lambda-java-events:3.11.4")
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
