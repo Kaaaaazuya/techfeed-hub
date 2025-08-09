@@ -18,10 +18,10 @@ export default function ArticleCard({ article }: ArticleCardProps) {
   }
 
   return (
-    <article className="bg-white rounded-lg shadow-sm border hover:shadow-md transition-shadow p-6">
+    <article className="bg-white rounded-lg shadow-sm border hover:shadow-md transition-shadow p-4 sm:p-6">
       <div className="space-y-3">
         {/* タイトル */}
-        <h2 className="text-xl font-semibold leading-tight">
+        <h2 className="text-lg sm:text-xl font-semibold leading-tight">
           <a
             href={article.url}
             target="_blank"
@@ -40,8 +40,8 @@ export default function ArticleCard({ article }: ArticleCardProps) {
         )}
 
         {/* メタデータ */}
-        <div className="flex flex-wrap items-center justify-between text-sm text-gray-500 pt-2">
-          <div className="flex flex-wrap items-center gap-4">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between text-sm text-gray-500 pt-2 gap-2">
+          <div className="flex flex-wrap items-center gap-2 sm:gap-4">
             {/* 著者 */}
             {article.author && (
               <span className="flex items-center">

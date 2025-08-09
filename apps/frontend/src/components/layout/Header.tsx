@@ -2,9 +2,20 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { MagnifyingGlassIcon } from '@heroicons/react/24/outline'
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [searchQuery, setSearchQuery] = useState('')
+  const router = useRouter()
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (searchQuery.trim()) {
+      router.push(`/search?q=${encodeURIComponent(searchQuery.trim())}&page=0`)
+    }
+  }
 
   return (
     <header className="bg-white shadow-sm border-b">
@@ -17,15 +28,30 @@ export default function Header() {
             </Link>
           </div>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex space-x-8">
-            <Link href="/" className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
-              記事一覧
-            </Link>
-            <Link href="/search" className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
-              検索
-            </Link>
-          </nav>
+          {/* Desktop Navigation & Search */}
+          <div className="hidden md:flex items-center space-x-4">
+            {/* Search Form */}
+            <form onSubmit={handleSearch} className="relative">
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="記事を検索..."
+                className="w-64 px-3 py-1.5 pl-9 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              />
+              <MagnifyingGlassIcon className="absolute left-2.5 top-2 h-4 w-4 text-gray-400" />
+            </form>
+            
+            {/* Navigation Links */}
+            <nav className="flex space-x-4">
+              <Link href="/" className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
+                記事一覧
+              </Link>
+              <Link href="/search" className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
+                検索
+              </Link>
+            </nav>
+          </div>
 
           {/* Mobile menu button */}
           <div className="md:hidden">

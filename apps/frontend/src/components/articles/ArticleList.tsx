@@ -6,6 +6,7 @@ import { ArticleListResponse } from '@/types/api'
 import ArticleCard from './ArticleCard'
 import LoadingSpinner from '../ui/LoadingSpinner'
 import ErrorMessage from '../ui/ErrorMessage'
+import Pagination from '../ui/Pagination'
 
 interface ArticleListProps {
   page?: number
@@ -14,13 +15,13 @@ interface ArticleListProps {
 }
 
 export default function ArticleList({ page = 0, size = 10, onPageChange }: ArticleListProps) {
-  const { data, error, isLoading } = useSWR<ArticleListResponse>(
+  const { data, error, isLoading, mutate } = useSWR<ArticleListResponse>(
     getArticlesUrl({ page, size }),
     fetcher
   )
 
   if (error) {
-    return <ErrorMessage error={error} />
+    return <ErrorMessage error={error} onRetry={() => mutate()} />
   }
 
   if (isLoading) {
@@ -53,27 +54,16 @@ export default function ArticleList({ page = 0, size = 10, onPageChange }: Artic
       </div>
 
       {/* ページネーション */}
-      <div className="flex justify-between items-center pt-6">
-        <button
-          onClick={() => onPageChange?.(page - 1)}
-          disabled={data.first}
-          className="px-4 py-2 bg-blue-500 text-white rounded-md disabled:bg-gray-300 disabled:cursor-not-allowed hover:bg-blue-600 transition-colors"
-        >
-          前のページ
-        </button>
-        
-        <span className="text-sm text-gray-600">
-          {data.page + 1} / {data.totalPages}
-        </span>
-        
-        <button
-          onClick={() => onPageChange?.(page + 1)}
-          disabled={data.last}
-          className="px-4 py-2 bg-blue-500 text-white rounded-md disabled:bg-gray-300 disabled:cursor-not-allowed hover:bg-blue-600 transition-colors"
-        >
-          次のページ
-        </button>
-      </div>
+      {onPageChange && (
+        <div className="pt-6">
+          <Pagination
+            currentPage={data.page + 1}
+            totalPages={data.totalPages}
+            onPageChange={(pageNum) => onPageChange(pageNum - 1)}
+            className="justify-center"
+          />
+        </div>
+      )}
     </div>
   )
 }
