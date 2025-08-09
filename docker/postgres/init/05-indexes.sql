@@ -20,6 +20,13 @@ CREATE UNIQUE INDEX idx_articles_url_hash ON articles(url_hash, published_at);
 CREATE INDEX idx_articles_title_search ON articles USING GIN(to_tsvector('simple', title));
 CREATE INDEX idx_articles_content_search ON articles USING GIN(to_tsvector('simple', COALESCE(content, summary, '')));
 
+-- 重み付き統合インデックス（検索パフォーマンス最適化）
+CREATE INDEX idx_articles_combined_search ON articles 
+USING GIN(
+    setweight(to_tsvector('simple', title), 'A') ||
+    setweight(to_tsvector('simple', COALESCE(content, summary, '')), 'B')
+);
+
 -- =====================================================
 -- ユーザー関連インデックス（セキュリティ重要）
 -- =====================================================

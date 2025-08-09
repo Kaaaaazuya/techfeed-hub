@@ -23,11 +23,20 @@ public interface ArticleRepository extends JpaRepository<Article, String> {
     @Query("SELECT a FROM Article a WHERE a.blogId = :blogId ORDER BY a.publishedAt DESC")
     Page<Article> findByBlogId(@Param("blogId") String blogId, Pageable pageable);
 
-    @Query("SELECT a FROM Article a WHERE " +
-           "LOWER(a.title) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
-           "LOWER(a.content) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
-           "LOWER(a.summary) LIKE LOWER(CONCAT('%', :keyword, '%')) " +
-           "ORDER BY a.publishedAt DESC")
+    @Query(value = """
+        SELECT a.*, 
+               ts_rank(
+                   setweight(to_tsvector('simple', a.title), 'A') ||
+                   setweight(to_tsvector('simple', COALESCE(a.content, a.summary, '')), 'B'),
+                   plainto_tsquery('simple', :keyword)
+               ) as search_rank
+        FROM articles a
+        WHERE (
+            to_tsvector('simple', a.title) @@ plainto_tsquery('simple', :keyword) OR
+            to_tsvector('simple', COALESCE(a.content, a.summary, '')) @@ plainto_tsquery('simple', :keyword)
+        )
+        ORDER BY search_rank DESC, a.published_at DESC
+        """, nativeQuery = true)
     Page<Article> findByKeyword(@Param("keyword") String keyword, Pageable pageable);
 
     @Query("SELECT COUNT(a) FROM Article a WHERE a.publishedAt >= :startDate AND a.publishedAt < :endDate")
