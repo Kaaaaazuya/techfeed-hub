@@ -90,6 +90,19 @@ services:
     profiles:
       - batch
 
+  frontend:
+    build:
+      context: ./apps/frontend
+      dockerfile: Dockerfile
+    container_name: techfeed-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:8080
+    networks:
+      - techfeed-network
+    restart: unless-stopped
+
 volumes:
   postgres_data:
   redis_data:

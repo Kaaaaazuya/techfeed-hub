@@ -2,28 +2,28 @@
 
 ## 進捗概要
 - **全タスク数**: 15個
-- **完了**: 0個
+- **完了**: 4個
 - **進行中**: 0個
-- **未着手**: 15個
+- **未着手**: 11個
 
 ## Phase 1: 基盤構築
 
-### [ ] 1. Next.jsプロジェクトの初期化
+### [x] 1. Next.jsプロジェクトの初期化
 - `/apps/frontend/` ディレクトリ作成
 - Next.js 14 (App Router) + TypeScript セットアップ
 - package.json, tsconfig.json 基本設定
 
-### [ ] 2. 開発環境セットアップ
+### [x] 2. 開発環境セットアップ
 - TypeScript strict mode 設定
 - ESLint + Prettier 設定
 - VS Code設定 (.vscode/settings.json)
 
-### [ ] 3. UIライブラリの選択と設定
+### [x] 3. UIライブラリの選択と設定
 - Tailwind CSS + Headless UI 推奨
 - UI コンポーネントライブラリ選定
 - デザインシステム基盤構築
 
-### [ ] 4. API連携設定
+### [x] 4. API連携設定
 - Spring Boot API との接続確認
 - API型定義作成 (ArticleResponse, PageResponse等)
 - HTTP クライアント設定 (SWR or TanStack Query)
