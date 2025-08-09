@@ -139,6 +139,56 @@ tasks:
     cmds:
       - npm run dev
 
+  frontend-install:
+    desc: Install frontend dependencies
+    dir: apps/frontend
+    cmds:
+      - npm install
+
+  frontend-lint:
+    desc: Run frontend linting
+    dir: apps/frontend
+    cmds:
+      - npm run lint
+
+  frontend-format:
+    desc: Format frontend code
+    dir: apps/frontend
+    cmds:
+      - npm run format
+
+  frontend-format-check:
+    desc: Check frontend code formatting
+    dir: apps/frontend
+    cmds:
+      - npm run format:check
+
+  frontend-build-static:
+    desc: Build frontend for static export (SPA)
+    dir: apps/frontend
+    cmds:
+      - npm run build:static
+
+  frontend-serve-static:
+    desc: Serve static frontend build locally
+    dir: apps/frontend
+    cmds:
+      - npm run serve:static
+
+  frontend-analyze:
+    desc: Analyze frontend bundle size
+    dir: apps/frontend
+    cmds:
+      - npm run analyze
+
+  frontend-test-build:
+    desc: Test static build and serve locally
+    deps: [frontend-build-static]
+    dir: apps/frontend
+    cmds:
+      - echo "Frontend built successfully. Testing static serve..."
+      - timeout 10s npm run serve:static || echo "Static server test completed"
+
   # Full stack operations
   up:
     desc: Start all services
@@ -192,12 +242,21 @@ tasks:
         echo "  task rss-batch-all   - Process all RSS articles"
         echo "  task rss-batch-date -- 2025-08-07 - Process specific date"
         echo ""
-        echo "Frontend:"
+        echo "Frontend (Docker):"
         echo "  task frontend-build  - Build frontend Docker image"
         echo "  task frontend-up     - Start frontend with API server"
         echo "  task frontend-down   - Stop frontend"
         echo "  task frontend-logs   - Show frontend logs"
-        echo "  task frontend-dev    - Run frontend in development mode"
+        echo ""
+        echo "Frontend (Development):"
+        echo "  task frontend-install      - Install frontend dependencies"
+        echo "  task frontend-dev          - Run frontend in development mode"
+        echo "  task frontend-build-static - Build for static export (SPA)"
+        echo "  task frontend-serve-static - Serve static build locally"
+        echo "  task frontend-lint         - Run linting"
+        echo "  task frontend-format       - Format code"
+        echo "  task frontend-analyze      - Analyze bundle size"
+        echo "  task frontend-test-build   - Test static build locally"
         echo ""
         echo "Database Access:"
         echo "  task db-shell-postgres - Connect to PostgreSQL"

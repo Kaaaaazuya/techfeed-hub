@@ -1,21 +1,22 @@
 import { Article } from '@/types/api'
+import { memo, useMemo } from 'react'
 
 interface ArticleCardProps {
   article: Article
 }
 
-export default function ArticleCard({ article }: ArticleCardProps) {
-  const publishedDate = new Date(article.publishedAt)
-  const now = new Date()
-  const diffTime = Math.abs(now.getTime() - publishedDate.getTime())
-  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+function ArticleCard({ article }: ArticleCardProps) {
+  const relativeTime = useMemo(() => {
+    const publishedDate = new Date(article.publishedAt)
+    const now = new Date()
+    const diffTime = Math.abs(now.getTime() - publishedDate.getTime())
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
 
-  const getRelativeTime = () => {
     if (diffDays === 1) return '今日'
     if (diffDays === 2) return '昨日'
     if (diffDays <= 7) return `${diffDays - 1}日前`
     return publishedDate.toLocaleDateString('ja-JP')
-  }
+  }, [article.publishedAt])
 
   return (
     <article className="bg-white rounded-lg shadow-sm border hover:shadow-md transition-shadow p-4 sm:p-6">
@@ -81,10 +82,12 @@ export default function ArticleCard({ article }: ArticleCardProps) {
             <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
               <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd" />
             </svg>
-            {getRelativeTime()}
+            {relativeTime}
           </time>
         </div>
       </div>
     </article>
   )
 }
+
+export default memo(ArticleCard)
