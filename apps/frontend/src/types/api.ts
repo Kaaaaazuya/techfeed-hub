@@ -14,6 +14,7 @@ export interface ArticleResponse {
   viewCount?: number
   readingTimeMinutes?: number
   createdAt: string // ISO 8601 format
+  blogName?: string // ブログ名
 }
 
 export interface PageResponse<T> {
@@ -42,3 +43,6 @@ export interface SearchParams extends ArticleListParams {
 // APIエンドポイント型
 export type ArticleListResponse = PageResponse<ArticleResponse>
 export type SearchResponse = PageResponse<ArticleResponse>
+
+// エイリアス
+export type Article = ArticleResponse
