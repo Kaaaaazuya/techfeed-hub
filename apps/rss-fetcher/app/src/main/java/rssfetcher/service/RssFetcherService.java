@@ -11,7 +11,7 @@ import rssfetcher.repository.ArticleRepository;
 import java.net.URI;
 import java.net.URL;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
@@ -55,17 +55,18 @@ public class RssFetcherService {
                 }
 
                 // 日付フィルタリング
-                LocalDateTime publishedDate = convertToLocalDateTime(entry.getPublishedDate());
-                if (targetDate != null && publishedDate != null) {
-                    LocalDate publishedLocalDate = publishedDate.toLocalDate();
+                ZonedDateTime publishedAt = convertToZonedDateTime(entry.getPublishedDate());
+                if (targetDate != null && publishedAt != null) {
+                    LocalDate publishedLocalDate = publishedAt.toLocalDate();
                     if (!publishedLocalDate.equals(targetDate)) {
                         skippedCount++;
                         continue;
                     }
                 }
 
-                // 重複チェック
-                if (articleRepository.existsByLink(entry.getLink())) {
+                // 重複チェック（URLハッシュで効率的に判定）
+                String urlHash = calculateUrlHash(entry.getLink());
+                if (articleRepository.existsByUrlHash(urlHash)) {
                     System.out.println("Article already exists, skipping: " + entry.getTitle());
                     skippedCount++;
                     continue;
@@ -102,19 +103,41 @@ public class RssFetcherService {
 
     private Article createArticleFromEntry(SyndEntry entry, SyndFeed feed, String feedUrl) {
         String title = entry.getTitle() != null ? entry.getTitle() : "No Title";
-        String link = entry.getLink();
-        String description = entry.getDescription() != null ? entry.getDescription().getValue() : null;
-        LocalDateTime publishedDate = convertToLocalDateTime(entry.getPublishedDate());
-        String feedTitle = feed.getTitle();
+        String url = entry.getLink();
+        String content = entry.getDescription() != null ? entry.getDescription().getValue() : null;
+        String summary = content; // 現在はcontentと同じにする
+        String author = entry.getAuthor();
+        ZonedDateTime publishedAt = convertToZonedDateTime(entry.getPublishedDate());
+        
+        // デフォルトのblogIdを使用（実際の実装では適切なblogIdを取得する必要がある）
+        String blogId = "01HXXXXXXXXXXXXXXXXXXXXXXX"; // 実際のテストblogId
 
-        return new Article(title, link, description, publishedDate, feedUrl, feedTitle);
+        return new Article(blogId, title, url, content, summary, author, publishedAt);
     }
 
-    private LocalDateTime convertToLocalDateTime(Date date) {
+    private ZonedDateTime convertToZonedDateTime(Date date) {
         if (date == null) {
-            return LocalDateTime.now();
+            return ZonedDateTime.now();
         }
-        return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+        return date.toInstant().atZone(ZoneId.systemDefault());
+    }
+
+    private String calculateUrlHash(String url) {
+        try {
+            java.security.MessageDigest digest = java.security.MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest(url.getBytes());
+            StringBuilder hexString = new StringBuilder();
+            for (byte b : hash) {
+                String hex = Integer.toHexString(0xff & b);
+                if (hex.length() == 1) {
+                    hexString.append('0');
+                }
+                hexString.append(hex);
+            }
+            return hexString.toString();
+        } catch (java.security.NoSuchAlgorithmException e) {
+            throw new RuntimeException("SHA-256 not available", e);
+        }
     }
 
     public List<Article> getArticlesByDate(LocalDate date) {

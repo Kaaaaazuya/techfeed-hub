@@ -36,9 +36,9 @@ public class RssReader {
                 for (Article article : todaysArticles) {
                     System.out.println("----");
                     System.out.println("Title: " + article.getTitle());
-                    System.out.println("Link: " + article.getLink());
-                    System.out.println("Published Date: " + article.getPublishedDate());
-                    System.out.println("Feed Source: " + article.getFeedSource());
+                    System.out.println("URL: " + article.getUrl());
+                    System.out.println("Published At: " + article.getPublishedAt());
+                    System.out.println("Blog ID: " + article.getBlogId());
                 }
             }
             

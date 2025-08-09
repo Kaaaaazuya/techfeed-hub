@@ -14,11 +14,11 @@ CREATE INDEX idx_blog_fetch_logs_status ON blog_fetch_logs(status, started_at DE
 -- =====================================================
 CREATE INDEX idx_articles_blog_published_covering ON articles(blog_id, published_at DESC, id);
 CREATE INDEX idx_articles_published_desc ON articles(published_at DESC) WHERE published_at IS NOT NULL;
-CREATE UNIQUE INDEX idx_articles_url_hash ON articles(url_hash);
+CREATE UNIQUE INDEX idx_articles_url_hash ON articles(url_hash, published_at);
 
 -- フルテキスト検索（セキュアな検索）
 CREATE INDEX idx_articles_title_search ON articles USING GIN(to_tsvector('simple', title));
-CREATE INDEX idx_articles_content_search ON articles USING GIN(to_tsvector('japanese', COALESCE(content, summary, '')));
+CREATE INDEX idx_articles_content_search ON articles USING GIN(to_tsvector('simple', COALESCE(content, summary, '')));
 
 -- =====================================================
 -- ユーザー関連インデックス（セキュリティ重要）
