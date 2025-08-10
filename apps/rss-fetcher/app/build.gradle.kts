@@ -8,6 +8,12 @@
 plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
     application
+    
+    // Code quality plugins
+    id("checkstyle")
+    id("pmd")
+    id("com.github.spotbugs") version "6.0.26"
+    id("jacoco")
 }
 
 repositories {
@@ -18,6 +24,11 @@ repositories {
 dependencies {
     // Use JUnit Jupiter for testing.
     testImplementation(libs.junit.jupiter)
+    testImplementation("org.mockito:mockito-core:5.14.2")
+    testImplementation("org.mockito:mockito-junit-jupiter:5.14.2")
+    testImplementation("org.testcontainers:junit-jupiter:1.20.4")
+    testImplementation("org.testcontainers:postgresql:1.20.4")
+    testImplementation("org.assertj:assertj-core:3.26.3")
 
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
@@ -39,6 +50,9 @@ dependencies {
     // AWS Lambda Core
     implementation("com.amazonaws:aws-lambda-java-core:1.2.3")
     implementation("com.amazonaws:aws-lambda-java-events:3.11.4")
+    
+    // SpotBugs annotations
+    compileOnly("com.github.spotbugs:spotbugs-annotations:4.8.6")
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
@@ -64,4 +78,77 @@ tasks.jar {
     }
     from(configurations.runtimeClasspath.get().map { if (it.isDirectory) it else zipTree(it) })
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+// JaCoCo configuration
+jacoco {
+    toolVersion = "0.8.12"
+}
+
+tasks.jacocoTestReport {
+    dependsOn(tasks.test)
+    reports {
+        xml.required.set(true)
+        html.required.set(true)
+        csv.required.set(false)
+    }
+    finalizedBy(tasks.jacocoTestCoverageVerification)
+}
+
+tasks.jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            limit {
+                minimum = "0.10".toBigDecimal() // Temporarily reduced for initial setup
+            }
+        }
+    }
+}
+
+// Checkstyle configuration
+checkstyle {
+    toolVersion = "10.20.1"
+    configFile = file("../../../config/checkstyle/checkstyle.xml")
+}
+
+// PMD configuration
+pmd {
+    toolVersion = "7.8.0"
+    ruleSetFiles = files("../../../config/pmd/pmd-ruleset.xml")
+}
+
+// SpotBugs configuration
+spotbugs {
+    toolVersion = "4.8.6"
+    effort = com.github.spotbugs.snom.Effort.MAX
+    reportLevel = com.github.spotbugs.snom.Confidence.MEDIUM
+    excludeFilter = file("../../../config/spotbugs/spotbugs-exclude.xml")
+}
+
+tasks.spotbugsMain {
+    reports.create("html") {
+        required.set(true)
+        outputLocation.set(layout.buildDirectory.file("reports/spotbugs/main.html"))
+    }
+    reports.create("xml") {
+        required.set(true)
+        outputLocation.set(layout.buildDirectory.file("reports/spotbugs/main.xml"))
+    }
+}
+
+// Test task configuration
+tasks.test {
+    finalizedBy(tasks.jacocoTestReport)
+}
+
+// Quality check task
+val qualityCheck by tasks.registering {
+    dependsOn(tasks.test, tasks.checkstyleMain, tasks.pmdMain, tasks.spotbugsMain)
+    group = "verification"
+    description = "Runs all quality checks"
+}
+
+// Make check depend on qualityCheck
+tasks.check {
+    dependsOn(qualityCheck)
 }

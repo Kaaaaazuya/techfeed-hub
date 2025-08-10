@@ -25,7 +25,7 @@ public class RssReader {
             System.out.println("=== RSS Reader with Database Storage ===");
             
             // 今日の記事を取得・保存
-            List<Article> savedArticles = fetcherService.fetchAndSaveArticles(feedUrl, LocalDate.now());
+            fetcherService.fetchAndSaveArticles(feedUrl, LocalDate.now());
             
             System.out.println("\n=== Today's Articles ===");
             List<Article> todaysArticles = fetcherService.getTodaysArticles();

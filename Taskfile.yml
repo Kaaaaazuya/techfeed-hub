@@ -111,6 +111,70 @@ tasks:
     cmds:
       - docker-compose build rss-fetcher
 
+  # RSS Fetcher development operations
+  rss-test:
+    desc: Run RSS fetcher unit tests
+    dir: apps/rss-fetcher
+    cmds:
+      - ./gradlew test --no-daemon
+
+  rss-test-watch:
+    desc: Run RSS fetcher tests in continuous mode
+    dir: apps/rss-fetcher
+    cmds:
+      - ./gradlew test --continuous --no-daemon
+
+  rss-coverage:
+    desc: Generate RSS fetcher test coverage report
+    dir: apps/rss-fetcher
+    cmds:
+      - ./gradlew jacocoTestReport --no-daemon
+      - echo 'Coverage report generated at apps/rss-fetcher/app/build/reports/jacoco/test/html/index.html'
+
+  rss-lint:
+    desc: Run RSS fetcher static analysis (Checkstyle, PMD, SpotBugs)
+    dir: apps/rss-fetcher
+    cmds:
+      - ./gradlew checkstyleMain pmdMain spotbugsMain --no-daemon --continue
+      - echo 'Checkstyle report at apps/rss-fetcher/app/build/reports/checkstyle/main.html'
+      - echo 'PMD report at apps/rss-fetcher/app/build/reports/pmd/main.html'
+      - echo 'SpotBugs report at apps/rss-fetcher/app/build/reports/spotbugs/main.html'
+
+  rss-quality-check:
+    desc: Run all RSS fetcher quality checks (tests + static analysis)
+    dir: apps/rss-fetcher
+    cmds:
+      - ./gradlew qualityCheck --no-daemon --continue
+      - echo 'All quality reports generated in apps/rss-fetcher/app/build/reports/'
+
+  rss-quick-check:
+    desc: Run RSS fetcher quick quality check (tests + coverage only)
+    dir: apps/rss-fetcher
+    cmds:
+      - ./gradlew test jacocoTestReport --no-daemon
+      - echo 'Test results and coverage report generated'
+      - echo 'Test report at apps/rss-fetcher/app/build/reports/tests/test/index.html'
+      - echo 'Coverage report at apps/rss-fetcher/app/build/reports/jacoco/test/html/index.html'
+
+  rss-clean:
+    desc: Clean RSS fetcher build artifacts
+    dir: apps/rss-fetcher
+    cmds:
+      - ./gradlew clean --no-daemon
+
+  rss-build-jar:
+    desc: Build RSS fetcher standalone JAR
+    dir: apps/rss-fetcher
+    cmds:
+      - ./gradlew build --no-daemon
+
+  rss-run-local:
+    desc: Run RSS fetcher locally (requires database)
+    dir: apps/rss-fetcher
+    deps: [db-up]
+    cmds:
+      - ./gradlew run --no-daemon
+
   # Frontend operations
   frontend-build:
     desc: Build frontend Docker image
@@ -303,6 +367,17 @@ tasks:
         echo "  task rss-batch-today - Process today's RSS articles"
         echo "  task rss-batch-all   - Process all RSS articles"
         echo "  task rss-batch-date -- 2025-08-07 - Process specific date"
+        echo ""
+        echo "RSS Fetcher (Development):"
+        echo "  task rss-test           - Run unit tests"
+        echo "  task rss-test-watch     - Run tests in continuous mode"
+        echo "  task rss-coverage       - Generate test coverage report"
+        echo "  task rss-quick-check    - Run quick quality check (tests + coverage)"
+        echo "  task rss-lint           - Run static analysis (Checkstyle, PMD, SpotBugs)"
+        echo "  task rss-quality-check  - Run all quality checks (tests + static analysis)"
+        echo "  task rss-clean          - Clean build artifacts"
+        echo "  task rss-build-jar      - Build standalone JAR"
+        echo "  task rss-run-local      - Run RSS fetcher locally"
         echo ""
         echo "Frontend (Docker):"
         echo "  task frontend-build  - Build frontend Docker image"

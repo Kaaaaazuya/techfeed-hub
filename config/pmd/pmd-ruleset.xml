@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<ruleset name="TechFeed PMD Rules"
+         xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 http://pmd.sourceforge.net/ruleset_2_0_0.xsd">
+
+    <description>PMD rules for TechFeed Hub RSS Fetcher - Minimal critical rules only</description>
+
+    <!-- Only include verified working rules -->
+    
+    <!-- Critical Best Practices -->
+    <rule ref="category/java/bestpractices.xml/UnusedLocalVariable"/>
+    <rule ref="category/java/bestpractices.xml/UnusedPrivateField"/>
+    <rule ref="category/java/bestpractices.xml/UnusedPrivateMethod"/>
+
+    <!-- Critical Error Prone patterns - only verified working rules -->
+    <rule ref="category/java/errorprone.xml/JumbledIncrementer"/>
+    <rule ref="category/java/errorprone.xml/MisplacedNullCheck"/>
+    <rule ref="category/java/errorprone.xml/OverrideBothEqualsAndHashcode"/>
+    <rule ref="category/java/errorprone.xml/ReturnFromFinallyBlock"/>
+    <rule ref="category/java/errorprone.xml/UnconditionalIfStatement"/>
+
+    <!-- Performance issues - verified rules -->
+    <rule ref="category/java/performance.xml/BigIntegerInstantiation"/>
+    
+    <!-- Security issues -->
+    <rule ref="category/java/security.xml"/>
+
+</ruleset>

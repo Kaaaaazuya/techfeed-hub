@@ -125,7 +125,7 @@ public class RssFetcherService {
     private String calculateUrlHash(String url) {
         try {
             java.security.MessageDigest digest = java.security.MessageDigest.getInstance("SHA-256");
-            byte[] hash = digest.digest(url.getBytes());
+            byte[] hash = digest.digest(url.getBytes(java.nio.charset.StandardCharsets.UTF_8));
             StringBuilder hexString = new StringBuilder();
             for (byte b : hash) {
                 String hex = Integer.toHexString(0xff & b);
