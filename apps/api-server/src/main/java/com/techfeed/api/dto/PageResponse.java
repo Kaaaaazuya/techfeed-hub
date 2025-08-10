@@ -15,7 +15,7 @@ public class PageResponse<T> {
     private boolean hasNext;
     private boolean hasPrevious;
 
-    public PageResponse() {}
+    public PageResponse() { }
 
     public static <T> PageResponse<T> from(Page<T> page) {
         PageResponse<T> response = new PageResponse<>();

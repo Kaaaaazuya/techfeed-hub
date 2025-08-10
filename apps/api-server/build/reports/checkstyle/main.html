@@ -1,0 +1,750 @@
+<html>
+    <head>
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Checkstyle Violations</title>
+        <style type="text/css">
+                    body {
+                        background-color: #fff;
+                        color: #02303A;
+                    }
+
+                    a {
+                        color: #1DA2BD;
+                    }
+                    a.link {
+                        color: #02303A;
+                    }
+
+                    p {
+                        font-size: 1rem;
+                    }
+
+                    h1 a[name] {
+                        margin: 0;
+                        padding: 0;
+                    }
+
+                    tr:nth-child(even) {
+                        background: white;
+                    }
+
+                    th {
+                        font-weight:bold;
+                    }
+                    tr {
+                        background: #efefef;
+                    }
+                    table th, td, tr {
+                        font-size:100%;
+                        border: none;
+                        text-align: left;
+                        vertical-align: top;
+                    }
+                </style>
+    </head>
+    <body>
+        <p>
+            <a name="top">
+                <h1>Checkstyle Results</h1>
+            </a>
+        </p>
+        <hr align="left" width="95%" size="1">
+        <h2>Summary</h2>
+        <table class="summary" width="95%">
+            <tr>
+                <th>Total files checked</th><th>Total violations</th><th>Files with violations</th>
+            </tr>
+            <tr>
+                <td>7</td><td>191</td><td>6</td>
+            </tr>
+        </table>
+        <hr align="left" width="95%" size="1">
+        <div class="violations">
+            <h2>Violations</h2>
+            <p>
+                <table class="filelist" width="95%">
+                    <tr>
+                        <th>File</th><th>Total violations</th>
+                    </tr>
+                    <tr>
+                        <td><a href="#N66051">/Users/kazuyayokoyama/local/techfeed-hub/apps/api-server/src/main/java/com/techfeed/api/entity/Article.java</a></td><td>84</td>
+                    </tr>
+                    <tr>
+                        <td><a href="#N65742">/Users/kazuyayokoyama/local/techfeed-hub/apps/api-server/src/main/java/com/techfeed/api/dto/ArticleResponse.java</a></td><td>43</td>
+                    </tr>
+                    <tr>
+                        <td><a href="#N65542">/Users/kazuyayokoyama/local/techfeed-hub/apps/api-server/src/main/java/com/techfeed/api/dto/PageResponse.java</a></td><td>28</td>
+                    </tr>
+                    <tr>
+                        <td><a href="#N66756">/Users/kazuyayokoyama/local/techfeed-hub/apps/api-server/src/main/java/com/techfeed/api/service/ArticleService.java</a></td><td>21</td>
+                    </tr>
+                    <tr>
+                        <td><a href="#N66643">/Users/kazuyayokoyama/local/techfeed-hub/apps/api-server/src/main/java/com/techfeed/api/controller/ArticleController.java</a></td><td>13</td>
+                    </tr>
+                    <tr>
+                        <td><a href="#N66738">/Users/kazuyayokoyama/local/techfeed-hub/apps/api-server/src/main/java/com/techfeed/api/TechFeedApiApplication.java</a></td><td>2</td>
+                    </tr>
+                </table>
+                <p></p>
+                
+                <div class="file-violation">
+                    <h3>
+                        <a class="link" name="N66643">/Users/kazuyayokoyama/local/techfeed-hub/apps/api-server/src/main/java/com/techfeed/api/controller/ArticleController.java</a>
+                    </h3>
+                    <table class="violationlist" width="95%">
+                        <tr>
+                            <th>Severity</th><th>Description</th><th>Line Number</th>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>'.*' 形式のインポートの使用は避けるべきです - org.springframework.web.bind.annotation.*。</td><td>9</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'ArticleController' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'getArticles' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'ArticleController' を final にするか、メソッド 'getArticles' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>24</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>パラメータ page は final にしてください。</td><td>26</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>パラメータ size は final にしてください。</td><td>27</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>パラメータ startDate は final にしてください。</td><td>28</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>パラメータ endDate は final にしてください。</td><td>29</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>パラメータ blogId は final にしてください。</td><td>30</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>パラメータ keyword は final にしてください。</td><td>31</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'ArticleController' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'getArticleById' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'ArticleController' を final にするか、メソッド 'getArticleById' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>48</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>パラメータ id は final にしてください。</td><td>49</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'ArticleController' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'getArticleCount' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'ArticleController' を final にするか、メソッド 'getArticleCount' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>55</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>パラメータ startDate は final にしてください。</td><td>57</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>パラメータ endDate は final にしてください。</td><td>58</td>
+                        </tr>
+                    </table>
+                    <p></p>
+                    <a href="#top">Back to top</a>
+                    <p></p>
+                </div>
+                <div class="file-violation">
+                    <h3>
+                        <a class="link" name="N65742">/Users/kazuyayokoyama/local/techfeed-hub/apps/api-server/src/main/java/com/techfeed/api/dto/ArticleResponse.java</a>
+                    </h3>
+                    <table class="violationlist" width="95%">
+                        <tr>
+                            <th>Severity</th><th>Description</th><th>Line Number</th>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>パラメータ article は final にしてください。</td><td>31</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'ArticleResponse' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'getId' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'ArticleResponse' を final にするか、メソッド 'getId' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>50</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'ArticleResponse' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'setId' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'ArticleResponse' を final にするか、メソッド 'setId' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>54</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>パラメータ id は final にしてください。</td><td>54</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'ArticleResponse' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'getBlogId' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'ArticleResponse' を final にするか、メソッド 'getBlogId' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>58</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'ArticleResponse' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'setBlogId' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'ArticleResponse' を final にするか、メソッド 'setBlogId' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>62</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>パラメータ blogId は final にしてください。</td><td>62</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'ArticleResponse' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'getTitle' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'ArticleResponse' を final にするか、メソッド 'getTitle' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>66</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'ArticleResponse' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'setTitle' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'ArticleResponse' を final にするか、メソッド 'setTitle' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>70</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>パラメータ title は final にしてください。</td><td>70</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'ArticleResponse' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'getUrl' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'ArticleResponse' を final にするか、メソッド 'getUrl' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>74</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'ArticleResponse' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'setUrl' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'ArticleResponse' を final にするか、メソッド 'setUrl' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>78</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>パラメータ url は final にしてください。</td><td>78</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'ArticleResponse' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'getContent' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'ArticleResponse' を final にするか、メソッド 'getContent' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>82</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'ArticleResponse' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'setContent' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'ArticleResponse' を final にするか、メソッド 'setContent' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>86</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>パラメータ content は final にしてください。</td><td>86</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'ArticleResponse' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'getSummary' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'ArticleResponse' を final にするか、メソッド 'getSummary' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>90</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'ArticleResponse' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'setSummary' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'ArticleResponse' を final にするか、メソッド 'setSummary' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>94</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>パラメータ summary は final にしてください。</td><td>94</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'ArticleResponse' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'getAiSummary' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'ArticleResponse' を final にするか、メソッド 'getAiSummary' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>98</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'ArticleResponse' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'setAiSummary' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'ArticleResponse' を final にするか、メソッド 'setAiSummary' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>102</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>パラメータ aiSummary は final にしてください。</td><td>102</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'ArticleResponse' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'getExcerpt' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'ArticleResponse' を final にするか、メソッド 'getExcerpt' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>106</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'ArticleResponse' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'setExcerpt' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'ArticleResponse' を final にするか、メソッド 'setExcerpt' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>110</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>パラメータ excerpt は final にしてください。</td><td>110</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'ArticleResponse' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'getAuthor' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'ArticleResponse' を final にするか、メソッド 'getAuthor' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>114</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'ArticleResponse' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'setAuthor' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'ArticleResponse' を final にするか、メソッド 'setAuthor' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>118</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>パラメータ author は final にしてください。</td><td>118</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'ArticleResponse' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'getLanguage' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'ArticleResponse' を final にするか、メソッド 'getLanguage' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>122</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'ArticleResponse' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'setLanguage' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'ArticleResponse' を final にするか、メソッド 'setLanguage' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>126</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>パラメータ language は final にしてください。</td><td>126</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'ArticleResponse' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'getPublishedAt' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'ArticleResponse' を final にするか、メソッド 'getPublishedAt' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>130</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'ArticleResponse' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'setPublishedAt' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'ArticleResponse' を final にするか、メソッド 'setPublishedAt' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>134</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>パラメータ publishedAt は final にしてください。</td><td>134</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'ArticleResponse' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'getViewCount' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'ArticleResponse' を final にするか、メソッド 'getViewCount' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>138</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'ArticleResponse' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'setViewCount' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'ArticleResponse' を final にするか、メソッド 'setViewCount' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>142</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>パラメータ viewCount は final にしてください。</td><td>142</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'ArticleResponse' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'getReadingTimeMinutes' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'ArticleResponse' を final にするか、メソッド 'getReadingTimeMinutes' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>146</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'ArticleResponse' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'setReadingTimeMinutes' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'ArticleResponse' を final にするか、メソッド 'setReadingTimeMinutes' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>150</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>パラメータ readingTimeMinutes は final にしてください。</td><td>150</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'ArticleResponse' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'getCreatedAt' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'ArticleResponse' を final にするか、メソッド 'getCreatedAt' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>154</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'ArticleResponse' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'setCreatedAt' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'ArticleResponse' を final にするか、メソッド 'setCreatedAt' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>158</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>パラメータ createdAt は final にしてください。</td><td>158</td>
+                        </tr>
+                    </table>
+                    <p></p>
+                    <a href="#top">Back to top</a>
+                    <p></p>
+                </div>
+                <div class="file-violation">
+                    <h3>
+                        <a class="link" name="N65542">/Users/kazuyayokoyama/local/techfeed-hub/apps/api-server/src/main/java/com/techfeed/api/dto/PageResponse.java</a>
+                    </h3>
+                    <table class="violationlist" width="95%">
+                        <tr>
+                            <th>Severity</th><th>Description</th><th>Line Number</th>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>パラメータ page は final にしてください。</td><td>20</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'PageResponse' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'getContent' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'PageResponse' を final にするか、メソッド 'getContent' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>34</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'PageResponse' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'setContent' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'PageResponse' を final にするか、メソッド 'setContent' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>38</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>パラメータ content は final にしてください。</td><td>38</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'PageResponse' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'getPage' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'PageResponse' を final にするか、メソッド 'getPage' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>42</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'PageResponse' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'setPage' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'PageResponse' を final にするか、メソッド 'setPage' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>46</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>パラメータ page は final にしてください。</td><td>46</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'PageResponse' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'getSize' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'PageResponse' を final にするか、メソッド 'getSize' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>50</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'PageResponse' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'setSize' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'PageResponse' を final にするか、メソッド 'setSize' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>54</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>パラメータ size は final にしてください。</td><td>54</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'PageResponse' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'getTotalElements' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'PageResponse' を final にするか、メソッド 'getTotalElements' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>58</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'PageResponse' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'setTotalElements' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'PageResponse' を final にするか、メソッド 'setTotalElements' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>62</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>パラメータ totalElements は final にしてください。</td><td>62</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'PageResponse' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'getTotalPages' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'PageResponse' を final にするか、メソッド 'getTotalPages' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>66</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'PageResponse' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'setTotalPages' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'PageResponse' を final にするか、メソッド 'setTotalPages' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>70</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>パラメータ totalPages は final にしてください。</td><td>70</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'PageResponse' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'isFirst' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'PageResponse' を final にするか、メソッド 'isFirst' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>74</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'PageResponse' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'setFirst' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'PageResponse' を final にするか、メソッド 'setFirst' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>78</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>パラメータ first は final にしてください。</td><td>78</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'PageResponse' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'isLast' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'PageResponse' を final にするか、メソッド 'isLast' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>82</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'PageResponse' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'setLast' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'PageResponse' を final にするか、メソッド 'setLast' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>86</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>パラメータ last は final にしてください。</td><td>86</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'PageResponse' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'isHasNext' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'PageResponse' を final にするか、メソッド 'isHasNext' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>90</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'PageResponse' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'setHasNext' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'PageResponse' を final にするか、メソッド 'setHasNext' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>94</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>パラメータ hasNext は final にしてください。</td><td>94</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'PageResponse' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'isHasPrevious' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'PageResponse' を final にするか、メソッド 'isHasPrevious' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>98</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'PageResponse' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'setHasPrevious' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'PageResponse' を final にするか、メソッド 'setHasPrevious' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>102</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>パラメータ hasPrevious は final にしてください。</td><td>102</td>
+                        </tr>
+                    </table>
+                    <p></p>
+                    <a href="#top">Back to top</a>
+                    <p></p>
+                </div>
+                <div class="file-violation">
+                    <h3>
+                        <a class="link" name="N66051">/Users/kazuyayokoyama/local/techfeed-hub/apps/api-server/src/main/java/com/techfeed/api/entity/Article.java</a>
+                    </h3>
+                    <table class="violationlist" width="95%">
+                        <tr>
+                            <th>Severity</th><th>Description</th><th>Line Number</th>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'Article' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'preUpdate' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'Article' を final にするか、メソッド 'preUpdate' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>100</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'Article' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'isPublishedToday' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'Article' を final にするか、メソッド 'isPublishedToday' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>105</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'Article' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'isPublishedOnDate' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'Article' を final にするか、メソッド 'isPublishedOnDate' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>112</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'Article' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'getId' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'Article' を final にするか、メソッド 'getId' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>119</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'Article' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'setId' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'Article' を final にするか、メソッド 'setId' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>123</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>パラメータ id は final にしてください。</td><td>123</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'Article' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'getBlogId' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'Article' を final にするか、メソッド 'getBlogId' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>127</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'Article' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'setBlogId' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'Article' を final にするか、メソッド 'setBlogId' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>131</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>パラメータ blogId は final にしてください。</td><td>131</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'Article' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'getTitle' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'Article' を final にするか、メソッド 'getTitle' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>135</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'Article' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'setTitle' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'Article' を final にするか、メソッド 'setTitle' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>139</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>パラメータ title は final にしてください。</td><td>139</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'Article' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'getUrl' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'Article' を final にするか、メソッド 'getUrl' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>143</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'Article' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'setUrl' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'Article' を final にするか、メソッド 'setUrl' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>147</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>パラメータ url は final にしてください。</td><td>147</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'Article' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'getUrlHash' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'Article' を final にするか、メソッド 'getUrlHash' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>151</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'Article' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'setUrlHash' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'Article' を final にするか、メソッド 'setUrlHash' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>155</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>パラメータ urlHash は final にしてください。</td><td>155</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'Article' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'getContent' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'Article' を final にするか、メソッド 'getContent' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>159</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'Article' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'setContent' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'Article' を final にするか、メソッド 'setContent' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>163</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>パラメータ content は final にしてください。</td><td>163</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'Article' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'getSummary' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'Article' を final にするか、メソッド 'getSummary' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>167</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'Article' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'setSummary' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'Article' を final にするか、メソッド 'setSummary' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>171</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>パラメータ summary は final にしてください。</td><td>171</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'Article' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'getAiSummary' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'Article' を final にするか、メソッド 'getAiSummary' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>175</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'Article' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'setAiSummary' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'Article' を final にするか、メソッド 'setAiSummary' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>179</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>パラメータ aiSummary は final にしてください。</td><td>179</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'Article' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'getExcerpt' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'Article' を final にするか、メソッド 'getExcerpt' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>183</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'Article' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'setExcerpt' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'Article' を final にするか、メソッド 'setExcerpt' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>187</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>パラメータ excerpt は final にしてください。</td><td>187</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'Article' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'getAuthor' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'Article' を final にするか、メソッド 'getAuthor' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>191</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'Article' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'setAuthor' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'Article' を final にするか、メソッド 'setAuthor' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>195</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>パラメータ author は final にしてください。</td><td>195</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'Article' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'getAuthorEmailHash' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'Article' を final にするか、メソッド 'getAuthorEmailHash' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>199</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'Article' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'setAuthorEmailHash' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'Article' を final にするか、メソッド 'setAuthorEmailHash' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>203</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>パラメータ authorEmailHash は final にしてください。</td><td>203</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'Article' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'getLanguage' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'Article' を final にするか、メソッド 'getLanguage' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>207</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'Article' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'setLanguage' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'Article' を final にするか、メソッド 'setLanguage' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>211</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>パラメータ language は final にしてください。</td><td>211</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'Article' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'getPublishedAt' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'Article' を final にするか、メソッド 'getPublishedAt' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>215</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'Article' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'setPublishedAt' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'Article' を final にするか、メソッド 'setPublishedAt' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>219</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>パラメータ publishedAt は final にしてください。</td><td>219</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'Article' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'getUpdatedAtSource' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'Article' を final にするか、メソッド 'getUpdatedAtSource' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>223</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'Article' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'setUpdatedAtSource' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'Article' を final にするか、メソッド 'setUpdatedAtSource' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>227</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>パラメータ updatedAtSource は final にしてください。</td><td>227</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'Article' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'getViewCount' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'Article' を final にするか、メソッド 'getViewCount' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>231</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'Article' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'setViewCount' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'Article' を final にするか、メソッド 'setViewCount' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>235</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>パラメータ viewCount は final にしてください。</td><td>235</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'Article' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'getClickCount' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'Article' を final にするか、メソッド 'getClickCount' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>239</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'Article' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'setClickCount' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'Article' を final にするか、メソッド 'setClickCount' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>243</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>パラメータ clickCount は final にしてください。</td><td>243</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'Article' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'getBookmarkCount' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'Article' を final にするか、メソッド 'getBookmarkCount' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>247</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'Article' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'setBookmarkCount' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'Article' を final にするか、メソッド 'setBookmarkCount' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>251</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>パラメータ bookmarkCount は final にしてください。</td><td>251</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'Article' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'getShareCount' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'Article' を final にするか、メソッド 'getShareCount' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>255</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'Article' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'setShareCount' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'Article' を final にするか、メソッド 'setShareCount' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>259</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>パラメータ shareCount は final にしてください。</td><td>259</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'Article' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'getReadingTimeMinutes' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'Article' を final にするか、メソッド 'getReadingTimeMinutes' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>263</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'Article' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'setReadingTimeMinutes' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'Article' を final にするか、メソッド 'setReadingTimeMinutes' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>267</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>パラメータ readingTimeMinutes は final にしてください。</td><td>267</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'Article' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'getContentFetchedAt' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'Article' を final にするか、メソッド 'getContentFetchedAt' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>271</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'Article' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'setContentFetchedAt' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'Article' を final にするか、メソッド 'setContentFetchedAt' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>275</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>パラメータ contentFetchedAt は final にしてください。</td><td>275</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'Article' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'getContentFetchStatus' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'Article' を final にするか、メソッド 'getContentFetchStatus' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>279</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'Article' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'setContentFetchStatus' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'Article' を final にするか、メソッド 'setContentFetchStatus' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>283</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>パラメータ contentFetchStatus は final にしてください。</td><td>283</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'Article' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'getCreatedAt' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'Article' を final にするか、メソッド 'getCreatedAt' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>287</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'Article' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'setCreatedAt' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'Article' を final にするか、メソッド 'setCreatedAt' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>291</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>パラメータ createdAt は final にしてください。</td><td>291</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'Article' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'getUpdatedAt' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'Article' を final にするか、メソッド 'getUpdatedAt' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>295</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'Article' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'setUpdatedAt' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'Article' を final にするか、メソッド 'setUpdatedAt' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>299</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>パラメータ updatedAt は final にしてください。</td><td>299</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'Article' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'equals' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'Article' を final にするか、メソッド 'equals' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>303</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>パラメータ o は final にしてください。</td><td>304</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>'if' 文では '{}' を使用しなければなりません。</td><td>305</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>'if' 文では '{}' を使用しなければなりません。</td><td>306</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'Article' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'hashCode' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'Article' を final にするか、メソッド 'hashCode' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>311</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'Article' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'toString' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'Article' を final にするか、メソッド 'toString' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>316</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>'+' は新しい行にあるべきです。</td><td>318</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>'+' は新しい行にあるべきです。</td><td>319</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>'+' は新しい行にあるべきです。</td><td>320</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>'+' は新しい行にあるべきです。</td><td>321</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>'+' は新しい行にあるべきです。</td><td>322</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>'+' は新しい行にあるべきです。</td><td>323</td>
+                        </tr>
+                    </table>
+                    <p></p>
+                    <a href="#top">Back to top</a>
+                    <p></p>
+                </div>
+                
+                <div class="file-violation">
+                    <h3>
+                        <a class="link" name="N66756">/Users/kazuyayokoyama/local/techfeed-hub/apps/api-server/src/main/java/com/techfeed/api/service/ArticleService.java</a>
+                    </h3>
+                    <table class="violationlist" width="95%">
+                        <tr>
+                            <th>Severity</th><th>Description</th><th>Line Number</th>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'ArticleService' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'getArticles' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'ArticleService' を final にするか、メソッド 'getArticles' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>24</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>パラメータ page は final にしてください。</td><td>24</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>パラメータ size は final にしてください。</td><td>24</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'ArticleService' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'getArticlesByDateRange' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'ArticleService' を final にするか、メソッド 'getArticlesByDateRange' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>32</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>パラメータ startDate は final にしてください。</td><td>33</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>パラメータ endDate は final にしてください。</td><td>33</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>パラメータ page は final にしてください。</td><td>33</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>パラメータ size は final にしてください。</td><td>33</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'ArticleService' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'getArticlesByBlogId' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'ArticleService' を final にするか、メソッド 'getArticlesByBlogId' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>41</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>パラメータ blogId は final にしてください。</td><td>41</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>パラメータ page は final にしてください。</td><td>41</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>パラメータ size は final にしてください。</td><td>41</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'ArticleService' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'searchArticles' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'ArticleService' を final にするか、メソッド 'searchArticles' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>49</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>パラメータ keyword は final にしてください。</td><td>49</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>パラメータ page は final にしてください。</td><td>49</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>パラメータ size は final にしてください。</td><td>49</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'ArticleService' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'getArticleById' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'ArticleService' を final にするか、メソッド 'getArticleById' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>57</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>パラメータ id は final にしてください。</td><td>57</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>クラス 'ArticleService' は拡張できるように設計されている（サブクラスを作れる）ようですが、メソッド 'getArticleCountByDateRange' には安全な拡張方法を説明した Javadoc がありません。拡張できるように設計していないのであれば、クラス 'ArticleService' を final にするか、メソッド 'getArticleCountByDateRange' を static/final/abstract にするか、メソッドを空にするか、Javadoc がないことを許可するアノテーションをつけることを検討してください。</td><td>62</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>パラメータ startDate は final にしてください。</td><td>62</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>パラメータ endDate は final にしてください。</td><td>62</td>
+                        </tr>
+                    </table>
+                    <p></p>
+                    <a href="#top">Back to top</a>
+                    <p></p>
+                </div>
+                <div class="file-violation">
+                    <h3>
+                        <a class="link" name="N66738">/Users/kazuyayokoyama/local/techfeed-hub/apps/api-server/src/main/java/com/techfeed/api/TechFeedApiApplication.java</a>
+                    </h3>
+                    <table class="violationlist" width="95%">
+                        <tr>
+                            <th>Severity</th><th>Description</th><th>Line Number</th>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>ユーティリティクラスは、パブリックまたはデフォルトコンストラクタを持つべきではありません。</td><td>6</td>
+                        </tr>
+                        <tr>
+                            <td>warning</td><td>パラメータ args は final にしてください。</td><td>8</td>
+                        </tr>
+                    </table>
+                    <p></p>
+                    <a href="#top">Back to top</a>
+                    <p></p>
+                </div>
+                <p></p>
+            </p>
+        </div>
+        <hr align="left" width="95%" size="1">
+        <p>
+            Generated by <a href="https://gradle.org">Gradle 9.0.0</a> with <a href="https://checkstyle.sourceforge.io/">Checkstyle 10.12.4</a>.
+        </p>
+    </body>
+</html>

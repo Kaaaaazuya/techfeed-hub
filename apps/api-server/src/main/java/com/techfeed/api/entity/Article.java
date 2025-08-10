@@ -1,6 +1,10 @@
 package com.techfeed.api.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.PreUpdate;
+import jakarta.persistence.Table;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -84,7 +88,7 @@ public class Article {
         this.updatedAt = LocalDateTime.now();
     }
 
-    public Article(String blogId, String title, String url, String urlHash, LocalDateTime publishedAt) {
+    public Article(final String blogId, final String title, final String url, final String urlHash, final LocalDateTime publishedAt) {
         this();
         this.blogId = blogId;
         this.title = title;
@@ -99,12 +103,16 @@ public class Article {
     }
 
     public boolean isPublishedToday() {
-        if (publishedAt == null) return false;
+        if (publishedAt == null) {
+            return false;
+        }
         return publishedAt.toLocalDate().equals(LocalDate.now());
     }
 
-    public boolean isPublishedOnDate(LocalDate targetDate) {
-        if (publishedAt == null) return false;
+    public boolean isPublishedOnDate(final LocalDate targetDate) {
+        if (publishedAt == null) {
+            return false;
+        }
         return publishedAt.toLocalDate().equals(targetDate);
     }
 

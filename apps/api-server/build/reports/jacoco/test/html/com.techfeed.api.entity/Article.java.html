@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ja"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Article.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">techfeed-api-server</a> &gt; <a href="index.source.html" class="el_package">com.techfeed.api.entity</a> &gt; <span class="el_source">Article.java</span></div><h1>Article.java</h1><pre class="source lang-java linenums">package com.techfeed.api.entity;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.PreUpdate;
+import jakarta.persistence.Table;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Objects;
+
+@Entity
+@Table(name = &quot;articles&quot;)
+public class Article {
+
+    @Id
+    @Column(length = 26)
+    private String id;
+
+    @Column(name = &quot;blog_id&quot;, nullable = false, length = 26)
+    private String blogId;
+
+    @Column(nullable = false, length = 500)
+    private String title;
+
+    @Column(nullable = false, length = 1000)
+    private String url;
+
+    @Column(name = &quot;url_hash&quot;, nullable = false, length = 64)
+    private String urlHash;
+
+    @Column(columnDefinition = &quot;TEXT&quot;)
+    private String content;
+
+    @Column(columnDefinition = &quot;TEXT&quot;)
+    private String summary;
+
+    @Column(name = &quot;ai_summary&quot;, columnDefinition = &quot;TEXT&quot;)
+    private String aiSummary;
+
+    @Column(columnDefinition = &quot;TEXT&quot;)
+    private String excerpt;
+
+    @Column(length = 255)
+    private String author;
+
+    @Column(name = &quot;author_email_hash&quot;, length = 64)
+    private String authorEmailHash;
+
+    @Column(length = 10)
+    private String language;
+
+    @Column(name = &quot;published_at&quot;, nullable = false)
+    private LocalDateTime publishedAt;
+
+    @Column(name = &quot;updated_at_source&quot;)
+    private LocalDateTime updatedAtSource;
+
+<span class="fc" id="L59">    @Column(name = &quot;view_count&quot;)</span>
+<span class="fc" id="L60">    private Integer viewCount = 0;</span>
+
+<span class="fc" id="L62">    @Column(name = &quot;click_count&quot;)</span>
+<span class="fc" id="L63">    private Integer clickCount = 0;</span>
+
+<span class="fc" id="L65">    @Column(name = &quot;bookmark_count&quot;)</span>
+<span class="fc" id="L66">    private Integer bookmarkCount = 0;</span>
+
+<span class="fc" id="L68">    @Column(name = &quot;share_count&quot;)</span>
+<span class="fc" id="L69">    private Integer shareCount = 0;</span>
+
+    @Column(name = &quot;reading_time_minutes&quot;)
+    private Integer readingTimeMinutes;
+
+    @Column(name = &quot;content_fetched_at&quot;)
+    private LocalDateTime contentFetchedAt;
+
+<span class="fc" id="L77">    @Column(name = &quot;content_fetch_status&quot;, length = 20)</span>
+    private String contentFetchStatus = &quot;PENDING&quot;;
+
+    @Column(name = &quot;created_at&quot;, nullable = false)
+    private LocalDateTime createdAt;
+
+    @Column(name = &quot;updated_at&quot;, nullable = false)
+    private LocalDateTime updatedAt;
+
+<span class="fc" id="L86">    public Article() {</span>
+<span class="fc" id="L87">        this.createdAt = LocalDateTime.now();</span>
+<span class="fc" id="L88">        this.updatedAt = LocalDateTime.now();</span>
+<span class="fc" id="L89">    }</span>
+
+    public Article(final String blogId, final String title, final String url, final String urlHash, final LocalDateTime publishedAt) {
+<span class="fc" id="L92">        this();</span>
+<span class="fc" id="L93">        this.blogId = blogId;</span>
+<span class="fc" id="L94">        this.title = title;</span>
+<span class="fc" id="L95">        this.url = url;</span>
+<span class="fc" id="L96">        this.urlHash = urlHash;</span>
+<span class="fc" id="L97">        this.publishedAt = publishedAt;</span>
+<span class="fc" id="L98">    }</span>
+
+    @PreUpdate
+    public void preUpdate() {
+<span class="fc" id="L102">        this.updatedAt = LocalDateTime.now();</span>
+<span class="fc" id="L103">    }</span>
+
+    public boolean isPublishedToday() {
+<span class="fc bfc" id="L106" title="All 2 branches covered.">        if (publishedAt == null) {</span>
+<span class="fc" id="L107">            return false;</span>
+        }
+<span class="fc" id="L109">        return publishedAt.toLocalDate().equals(LocalDate.now());</span>
+    }
+
+    public boolean isPublishedOnDate(final LocalDate targetDate) {
+<span class="pc bpc" id="L113" title="1 of 2 branches missed.">        if (publishedAt == null) {</span>
+<span class="nc" id="L114">            return false;</span>
+        }
+<span class="fc" id="L116">        return publishedAt.toLocalDate().equals(targetDate);</span>
+    }
+
+    public String getId() {
+<span class="fc" id="L120">        return id;</span>
+    }
+
+    public void setId(String id) {
+<span class="fc" id="L124">        this.id = id;</span>
+<span class="fc" id="L125">    }</span>
+
+    public String getBlogId() {
+<span class="fc" id="L128">        return blogId;</span>
+    }
+
+    public void setBlogId(String blogId) {
+<span class="fc" id="L132">        this.blogId = blogId;</span>
+<span class="fc" id="L133">    }</span>
+
+    public String getTitle() {
+<span class="fc" id="L136">        return title;</span>
+    }
+
+    public void setTitle(String title) {
+<span class="fc" id="L140">        this.title = title;</span>
+<span class="fc" id="L141">    }</span>
+
+    public String getUrl() {
+<span class="fc" id="L144">        return url;</span>
+    }
+
+    public void setUrl(String url) {
+<span class="fc" id="L148">        this.url = url;</span>
+<span class="fc" id="L149">    }</span>
+
+    public String getUrlHash() {
+<span class="fc" id="L152">        return urlHash;</span>
+    }
+
+    public void setUrlHash(String urlHash) {
+<span class="fc" id="L156">        this.urlHash = urlHash;</span>
+<span class="fc" id="L157">    }</span>
+
+    public String getContent() {
+<span class="fc" id="L160">        return content;</span>
+    }
+
+    public void setContent(String content) {
+<span class="nc" id="L164">        this.content = content;</span>
+<span class="nc" id="L165">    }</span>
+
+    public String getSummary() {
+<span class="fc" id="L168">        return summary;</span>
+    }
+
+    public void setSummary(String summary) {
+<span class="nc" id="L172">        this.summary = summary;</span>
+<span class="nc" id="L173">    }</span>
+
+    public String getAiSummary() {
+<span class="fc" id="L176">        return aiSummary;</span>
+    }
+
+    public void setAiSummary(String aiSummary) {
+<span class="nc" id="L180">        this.aiSummary = aiSummary;</span>
+<span class="nc" id="L181">    }</span>
+
+    public String getExcerpt() {
+<span class="fc" id="L184">        return excerpt;</span>
+    }
+
+    public void setExcerpt(String excerpt) {
+<span class="nc" id="L188">        this.excerpt = excerpt;</span>
+<span class="nc" id="L189">    }</span>
+
+    public String getAuthor() {
+<span class="fc" id="L192">        return author;</span>
+    }
+
+    public void setAuthor(String author) {
+<span class="fc" id="L196">        this.author = author;</span>
+<span class="fc" id="L197">    }</span>
+
+    public String getAuthorEmailHash() {
+<span class="nc" id="L200">        return authorEmailHash;</span>
+    }
+
+    public void setAuthorEmailHash(String authorEmailHash) {
+<span class="nc" id="L204">        this.authorEmailHash = authorEmailHash;</span>
+<span class="nc" id="L205">    }</span>
+
+    public String getLanguage() {
+<span class="fc" id="L208">        return language;</span>
+    }
+
+    public void setLanguage(String language) {
+<span class="fc" id="L212">        this.language = language;</span>
+<span class="fc" id="L213">    }</span>
+
+    public LocalDateTime getPublishedAt() {
+<span class="fc" id="L216">        return publishedAt;</span>
+    }
+
+    public void setPublishedAt(LocalDateTime publishedAt) {
+<span class="fc" id="L220">        this.publishedAt = publishedAt;</span>
+<span class="fc" id="L221">    }</span>
+
+    public LocalDateTime getUpdatedAtSource() {
+<span class="nc" id="L224">        return updatedAtSource;</span>
+    }
+
+    public void setUpdatedAtSource(LocalDateTime updatedAtSource) {
+<span class="nc" id="L228">        this.updatedAtSource = updatedAtSource;</span>
+<span class="nc" id="L229">    }</span>
+
+    public Integer getViewCount() {
+<span class="fc" id="L232">        return viewCount;</span>
+    }
+
+    public void setViewCount(Integer viewCount) {
+<span class="nc" id="L236">        this.viewCount = viewCount;</span>
+<span class="nc" id="L237">    }</span>
+
+    public Integer getClickCount() {
+<span class="fc" id="L240">        return clickCount;</span>
+    }
+
+    public void setClickCount(Integer clickCount) {
+<span class="nc" id="L244">        this.clickCount = clickCount;</span>
+<span class="nc" id="L245">    }</span>
+
+    public Integer getBookmarkCount() {
+<span class="fc" id="L248">        return bookmarkCount;</span>
+    }
+
+    public void setBookmarkCount(Integer bookmarkCount) {
+<span class="nc" id="L252">        this.bookmarkCount = bookmarkCount;</span>
+<span class="nc" id="L253">    }</span>
+
+    public Integer getShareCount() {
+<span class="fc" id="L256">        return shareCount;</span>
+    }
+
+    public void setShareCount(Integer shareCount) {
+<span class="nc" id="L260">        this.shareCount = shareCount;</span>
+<span class="nc" id="L261">    }</span>
+
+    public Integer getReadingTimeMinutes() {
+<span class="fc" id="L264">        return readingTimeMinutes;</span>
+    }
+
+    public void setReadingTimeMinutes(Integer readingTimeMinutes) {
+<span class="nc" id="L268">        this.readingTimeMinutes = readingTimeMinutes;</span>
+<span class="nc" id="L269">    }</span>
+
+    public LocalDateTime getContentFetchedAt() {
+<span class="nc" id="L272">        return contentFetchedAt;</span>
+    }
+
+    public void setContentFetchedAt(LocalDateTime contentFetchedAt) {
+<span class="nc" id="L276">        this.contentFetchedAt = contentFetchedAt;</span>
+<span class="nc" id="L277">    }</span>
+
+    public String getContentFetchStatus() {
+<span class="fc" id="L280">        return contentFetchStatus;</span>
+    }
+
+    public void setContentFetchStatus(String contentFetchStatus) {
+<span class="nc" id="L284">        this.contentFetchStatus = contentFetchStatus;</span>
+<span class="nc" id="L285">    }</span>
+
+    public LocalDateTime getCreatedAt() {
+<span class="fc" id="L288">        return createdAt;</span>
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+<span class="nc" id="L292">        this.createdAt = createdAt;</span>
+<span class="nc" id="L293">    }</span>
+
+    public LocalDateTime getUpdatedAt() {
+<span class="fc" id="L296">        return updatedAt;</span>
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+<span class="nc" id="L300">        this.updatedAt = updatedAt;</span>
+<span class="nc" id="L301">    }</span>
+
+    @Override
+    public boolean equals(Object o) {
+<span class="pc bpc" id="L305" title="1 of 2 branches missed.">        if (this == o) return true;</span>
+<span class="pc bpc" id="L306" title="2 of 4 branches missed.">        if (o == null || getClass() != o.getClass()) return false;</span>
+<span class="fc" id="L307">        Article article = (Article) o;</span>
+<span class="fc" id="L308">        return Objects.equals(urlHash, article.urlHash);</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="fc" id="L313">        return Objects.hash(urlHash);</span>
+    }
+
+    @Override
+    public String toString() {
+<span class="fc" id="L318">        return &quot;Article{&quot; +</span>
+                &quot;id='&quot; + id + '\'' +
+                &quot;, title='&quot; + title + '\'' +
+                &quot;, url='&quot; + url + '\'' +
+                &quot;, publishedAt=&quot; + publishedAt +
+                &quot;, blogId='&quot; + blogId + '\'' +
+                '}';
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

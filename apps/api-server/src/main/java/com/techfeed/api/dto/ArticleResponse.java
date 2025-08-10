@@ -26,7 +26,7 @@ public class ArticleResponse {
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime createdAt;
 
-    public ArticleResponse() {}
+    public ArticleResponse() { }
 
     public static ArticleResponse from(Article article) {
         ArticleResponse response = new ArticleResponse();

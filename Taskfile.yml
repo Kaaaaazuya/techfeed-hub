@@ -79,13 +79,45 @@ tasks:
     cmds:
       - docker-compose logs -f api-server
 
-  api-test:
+  api-test-endpoints:
     desc: Test API endpoints
     deps: [api-up]
     cmds:
       - sleep 10
       - curl -s http://localhost:8080/actuator/health | jq .
       - curl -s "http://localhost:8080/api/v1/articles?page=0&size=5" | jq .
+
+  # API Server development tasks
+  api-build:
+    desc: Build API Server with Gradle
+    dir: apps/api-server
+    cmds:
+      - ./gradlew build
+
+  api-test:
+    desc: Run API Server unit tests
+    dir: apps/api-server
+    cmds:
+      - ./gradlew test
+
+  api-quick-check:
+    desc: "Run quick quality check (tests + coverage)"
+    dir: apps/api-server
+    cmds:
+      - ./gradlew test jacocoTestReport
+
+  api-quality-check:
+    desc: Run all quality checks for API Server
+    dir: apps/api-server
+    cmds:
+      - ./gradlew clean test jacocoTestReport checkstyleMain pmdMain spotbugsMain
+
+  api-coverage:
+    desc: Generate API Server test coverage report
+    dir: apps/api-server
+    cmds:
+      - ./gradlew jacocoTestReport
+      - echo "Coverage report available at apps/api-server/build/reports/jacoco/test/html/index.html"
 
   # RSS Fetcher batch operations
   rss-batch-today:

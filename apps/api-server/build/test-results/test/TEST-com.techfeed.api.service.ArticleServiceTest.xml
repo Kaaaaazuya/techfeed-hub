@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.techfeed.api.service.ArticleServiceTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2025-08-10T00:22:50.784Z" hostname="mba.local" time="0.206">
+  <properties/>
+  <testcase name="testGetArticlesByDateRange()" classname="com.techfeed.api.service.ArticleServiceTest" time="0.195"/>
+  <testcase name="testGetArticleById()" classname="com.techfeed.api.service.ArticleServiceTest" time="0.002"/>
+  <testcase name="testGetArticleCountByDateRange()" classname="com.techfeed.api.service.ArticleServiceTest" time="0.002"/>
+  <testcase name="testGetArticlesByBlogId()" classname="com.techfeed.api.service.ArticleServiceTest" time="0.002"/>
+  <testcase name="testGetArticles()" classname="com.techfeed.api.service.ArticleServiceTest" time="0.002"/>
+  <testcase name="testGetArticleByIdNotFound()" classname="com.techfeed.api.service.ArticleServiceTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
