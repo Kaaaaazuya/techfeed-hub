@@ -1,0 +1,13 @@
+# .tbls.yml
+
+# DSN (Database Source Name) to connect database
+# SSLモードを無効にして接続する
+dsn: postgresql://techfeed_user:techfeed_password@localhost:5432/techfeed_hub?sslmode=disable
+# Path to generate document
+docPath: docs/schema
+
+disableOutputSchema: true
+
+er:
+  format: mermaid
+
