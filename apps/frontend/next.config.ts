@@ -32,6 +32,12 @@ const nextConfig: NextConfig = {
 
   // Configure webpack for better optimization
   webpack: (config, { isServer }) => {
+    // Exclude Storybook files from build
+    config.module.rules.push({
+      test: /\.stories\.(js|jsx|ts|tsx|mdx)$/,
+      use: 'ignore-loader',
+    })
+
     if (!isServer) {
       // Client-side optimizations
       config.optimization.splitChunks = {

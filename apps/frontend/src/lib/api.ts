@@ -37,14 +37,14 @@ export function getArticlesUrl(params: ArticleListParams = {}) {
 export function getSearchUrl(params: SearchParams) {
   const searchParams = new URLSearchParams()
 
-  searchParams.append('query', params.query)
+  searchParams.append('keyword', params.query)
   if (params.page !== undefined)
     searchParams.append('page', params.page.toString())
   if (params.size !== undefined)
     searchParams.append('size', params.size.toString())
   if (params.sort) searchParams.append('sort', params.sort)
 
-  return `${API_BASE_URL}/api/v1/articles?keyword=${encodeURIComponent(params.query)}&${searchParams.toString()}`
+  return `${API_BASE_URL}/api/v1/articles?${searchParams.toString()}`
 }
 
 // API関数

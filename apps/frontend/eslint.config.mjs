@@ -33,6 +33,11 @@ const eslintConfig = [...compat.extends('next/core-web-vitals', 'next/typescript
   rules: {
     '@typescript-eslint/no-explicit-any': 'off',
   },
-}, ...storybook.configs["flat/recommended"]]
+}, ...storybook.configs["flat/recommended"], {
+  files: ["**/*.stories.@(js|jsx|ts|tsx)"],
+  rules: {
+    "storybook/no-renderer-packages": "off",
+  },
+}]
 
 export default eslintConfig
