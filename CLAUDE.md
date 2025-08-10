@@ -4,22 +4,25 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-TechFeed Hub is an AI-summarized, personalizable tech blog aggregation service for engineers. The system fetches RSS feeds, stores articles in a PostgreSQL database, and provides a foundation for future AI summarization features.
+TechFeed Hub is an AI-summarized, personalizable tech blog aggregation service for engineers. The system fetches RSS feeds, stores articles in a PostgreSQL database, and provides REST APIs and frontend for article browsing.
 
 ## Architecture
 
 ### Tech Stack
 - **RSS Fetcher**: Java 21 with Gradle, Hibernate JPA, Rome RSS library
+- **API Server**: Spring Boot 3.3.4 with JPA, PostgreSQL
+- **Frontend**: Next.js 15.4.6 with TypeScript, Tailwind CSS, Storybook
 - **Database**: PostgreSQL 15 with Redis 7 for caching
-- **Frontend**: Next.js + TypeScript (planned)
-- **Backend API**: Java Spring Boot (planned)
-- **Infrastructure**: AWS (Lambda, RDS, S3, EventBridge, App Runner), Docker
+- **Infrastructure**: AWS (Lambda, RDS, S3, EventBridge, App Runner), Docker, CDK
+- **Testing**: JUnit Jupiter (Java), Vitest + Playwright (Frontend)
 
 ### Directory Structure
 - `/apps/rss-fetcher/` - Java batch RSS processing application
+- `/apps/api-server/` - Spring Boot REST API server
+- `/apps/frontend/` - Next.js frontend application
 - `/docker/postgres/init/` - Database schema, functions, and initialization scripts
-- `/infra/` - Infrastructure as code (CDK)
-- `/packages/` - Shared packages (future)
+- `/infra/` - Infrastructure as code (CDK with TypeScript)
+- `/config/` - Shared quality check configurations (Checkstyle, PMD, SpotBugs)
 
 ## Key Commands
 
@@ -34,13 +37,39 @@ task db-restart     # Restart database services
 task db-shell-postgres  # Connect to PostgreSQL shell
 ```
 
+#### API Server Development
+```bash
+task api-build          # Build API server with Gradle
+task api-test           # Run unit tests
+task api-quick-check    # Run tests + coverage
+task api-quality-check  # Run all quality checks (tests + static analysis)
+task api-coverage       # Generate test coverage report
+```
+
 #### RSS Fetcher Development
 ```bash
-cd apps/rss-fetcher
-task build          # Build Java application with Gradle
-task test           # Run tests
-task run            # Run application locally
-task lint           # Run code quality checks (./gradlew check)
+task rss-test           # Run unit tests
+task rss-test-watch     # Run tests in continuous mode
+task rss-coverage       # Generate test coverage report
+task rss-lint           # Run static analysis (Checkstyle, PMD, SpotBugs)
+task rss-quality-check  # Run all quality checks
+task rss-quick-check    # Run tests + coverage only
+task rss-build-jar      # Build standalone JAR
+task rss-run-local      # Run RSS fetcher locally (requires database)
+```
+
+#### Frontend Development
+```bash
+task frontend-install        # Install dependencies
+task frontend-dev            # Run development server
+task frontend-build-static   # Build for static export
+task frontend-lint           # Run ESLint
+task frontend-format         # Format code with Prettier
+task frontend-test           # Run unit tests (Vitest)
+task frontend-test-e2e       # Run E2E tests (Playwright)
+task frontend-quality-check  # Run all quality checks
+task frontend-storybook      # Start Storybook development server
+task frontend-analyze        # Analyze bundle size
 ```
 
 #### RSS Batch Processing
@@ -65,8 +94,10 @@ task cdk-deploy         # Deploy CDK stack (with pre-deployment tests)
 task cdk-destroy        # Destroy CDK stack
 ```
 
-#### Full Stack Operations
+#### Docker Operations
 ```bash
+task api-up         # Start API server with database
+task frontend-up    # Start frontend with API server
 task up            # Start all services
 task down          # Stop all services
 task status        # Check all services status
@@ -92,27 +123,28 @@ PostgreSQL: localhost:5432/techfeed_hub (techfeed_user/techfeed_password)
 Redis: localhost:6379
 ```
 
-## Java Application Details
+## Application Architecture
 
-### Main Classes
-- `RssBatchProcessor` - Entry point for RSS batch processing
-- `RssFetcherService` - Core RSS fetching and article processing logic
-- `ArticleRepository` - JPA repository for article operations
-- `Article` entity - JPA entity representing articles
+### API Server (Spring Boot)
+- **Main Entry**: `TechFeedApiApplication.java`
+- **Controllers**: REST endpoints in `controller/` package
+- **Services**: Business logic in `service/` package  
+- **Repositories**: JPA repositories in `repository/` package
+- **DTOs**: Response objects in `dto/` package
+- **Entities**: JPA entities in `entity/` package
+- **Configuration**: Spring Boot auto-configuration with `application.yml`
 
-### RSS Processing Flow
-1. Fetch RSS feed using Rome library
-2. Parse entries and check for duplicates by URL
-3. Filter by date if specified
-4. Save new articles to PostgreSQL with Hibernate
-5. Log processing statistics
+### RSS Fetcher (Batch Processing)
+- **Main Classes**: `RssBatchProcessor`, `RssFetcherService`, `ArticleRepository`
+- **RSS Processing Flow**: Fetch RSS → Parse → Check duplicates → Filter by date → Save to DB
+- **Dependencies**: Rome RSS library, Hibernate 6.4.1, PostgreSQL JDBC
 
-### Dependencies
-- Rome RSS library for feed parsing
-- Hibernate 6.4.1 for JPA/ORM
-- PostgreSQL JDBC driver
-- HikariCP for connection pooling
-- JUnit Jupiter for testing
+### Frontend (Next.js)
+- **App Router**: Route handlers in `src/app/` directory
+- **Components**: Reusable UI components in `src/components/`
+- **API Client**: SWR-based data fetching in `src/lib/api.ts`
+- **Styling**: Tailwind CSS with component-scoped styles
+- **Testing**: Vitest for unit tests, Playwright for E2E
 
 ## Development Guidelines
 
@@ -122,17 +154,20 @@ Redis: localhost:6379
 - Comprehensive error handling and logging
 - Transaction management with EntityManager
 
-### Testing Strategy
-- Use `./gradlew test` for unit tests
-- Integration tests should use test database setup
-- RSS feed processing tests with mock feeds
+### Quality Assurance
+- **Java**: Checkstyle, PMD, SpotBugs static analysis with shared configurations
+- **Coverage**: JaCoCo for Java, built-in coverage for frontend  
+- **Testing**: JUnit Jupiter (Java), Vitest + Testing Library (React), Playwright (E2E)
+- **Integration**: Testcontainers for database integration tests
 
-### Docker Development
-- Local development uses docker-compose for databases
-- RSS fetcher runs as batch job with Docker profile
-- All services connected via techfeed-network
+### Development Environment
+- **Database**: Local PostgreSQL + Redis via docker-compose
+- **API Server**: Spring Boot with hot reload, H2 for tests
+- **Frontend**: Next.js dev server with fast refresh
+- **RSS Fetcher**: Can run locally or as Docker batch job
 
-### Database Migrations
-- Schema changes go in `/docker/postgres/init/` SQL files
-- Partitioning and indexing handled in separate numbered scripts
-- Sample data provided in `08-sample-data.sql`
+### Database Management
+- **Schema**: Versioned SQL files in `/docker/postgres/init/`
+- **Partitioning**: Monthly partitioning on articles and audit logs
+- **Sample Data**: Pre-loaded via `08-sample-data.sql`
+- **Access**: Use `task db-shell-postgres` for direct database access
