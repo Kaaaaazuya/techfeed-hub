@@ -20,7 +20,7 @@ export default function SearchPageContent() {
       setCurrentSearch({
         query: queryFromUrl,
         page: pageFromUrl,
-        size: 10
+        size: 10,
       })
     }
   }, [queryFromUrl, pageFromUrl])
@@ -34,7 +34,7 @@ export default function SearchPageContent() {
 
   const handlePageChange = (page: number) => {
     if (!currentSearch) return
-    
+
     const newSearchParams = new URLSearchParams()
     newSearchParams.set('q', currentSearch.query)
     newSearchParams.set('page', page.toString())
@@ -50,7 +50,9 @@ export default function SearchPageContent() {
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8">
       <div className="space-y-8">
         <div className="space-y-4">
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">記事検索</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
+            記事検索
+          </h1>
           <SearchBox
             onSearch={handleSearch}
             defaultValue={queryFromUrl}
@@ -81,8 +83,18 @@ export default function SearchPageContent() {
                   href="/"
                   className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
                 >
-                  <svg className="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                  <svg
+                    className="w-4 h-4 mr-2"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M10 19l-7-7m0 0l7-7m-7 7h18"
+                    />
                   </svg>
                   記事一覧に戻る
                 </Link>

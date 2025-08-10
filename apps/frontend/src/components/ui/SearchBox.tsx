@@ -16,7 +16,7 @@ export default function SearchBox({
   placeholder = '記事を検索...',
   defaultValue = '',
   autoFocus = false,
-  className = ''
+  className = '',
 }: SearchBoxProps) {
   const [query, setQuery] = useState(defaultValue)
   const inputRef = useRef<HTMLInputElement>(null)
@@ -51,24 +51,24 @@ export default function SearchBox({
     <form onSubmit={handleSubmit} className={`relative ${className}`}>
       <div className="relative">
         <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-          <MagnifyingGlassIcon 
-            className="h-5 w-5 text-gray-400" 
-            aria-hidden="true" 
+          <MagnifyingGlassIcon
+            className="h-5 w-5 text-gray-400"
+            aria-hidden="true"
           />
         </div>
-        
+
         <input
           ref={inputRef}
           type="text"
           value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          onChange={e => setQuery(e.target.value)}
           onKeyDown={handleKeyDown}
           placeholder={placeholder}
           className="block w-full rounded-lg border border-gray-300 bg-white py-3 pl-10 pr-12 text-sm placeholder:text-gray-500 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-25"
           autoComplete="off"
           aria-label="検索クエリ"
         />
-        
+
         {query && (
           <button
             type="button"
@@ -79,7 +79,7 @@ export default function SearchBox({
             <XMarkIcon className="h-5 w-5" />
           </button>
         )}
-        
+
         <button
           type="submit"
           disabled={!query.trim()}
@@ -89,7 +89,7 @@ export default function SearchBox({
           <MagnifyingGlassIcon className="h-5 w-5" />
         </button>
       </div>
-      
+
       {/* 検索ヒント */}
       <div className="mt-2 text-xs text-gray-500">
         記事のタイトル・本文・要約から検索します。Escキーでクリア。

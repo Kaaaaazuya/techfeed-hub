@@ -277,6 +277,64 @@ tasks:
     cmds:
       - npm run analyze
 
+  frontend-test:
+    desc: Run frontend unit tests
+    dir: apps/frontend
+    cmds:
+      - npm run test:run
+
+  frontend-test-watch:
+    desc: Run frontend unit tests in watch mode
+    dir: apps/frontend
+    cmds:
+      - npm run test:watch
+
+  frontend-test-coverage:
+    desc: Generate frontend test coverage report
+    dir: apps/frontend
+    cmds:
+      - npm run test:coverage
+
+  frontend-test-e2e:
+    desc: Run frontend E2E tests
+    dir: apps/frontend
+    cmds:
+      - npm run test:e2e
+
+  frontend-test-e2e-ui:
+    desc: Run frontend E2E tests with UI
+    dir: apps/frontend
+    cmds:
+      - npm run test:e2e:ui
+
+  frontend-quality-check:
+    desc: Run all frontend quality checks (lint + format check + tests)
+    dir: apps/frontend
+    cmds:
+      - npm run lint
+      - npm run format:check
+      - npm run test:run
+
+  frontend-quality-fix:
+    desc: Run all frontend quality checks with auto-fix (lint + format + tests)
+    dir: apps/frontend
+    cmds:
+      - npm run lint -- --fix
+      - npm run format
+      - npm run test:run
+
+  frontend-storybook:
+    desc: Start Storybook development server
+    dir: apps/frontend
+    cmds:
+      - npm run storybook
+
+  frontend-build-storybook:
+    desc: Build Storybook for production
+    dir: apps/frontend
+    cmds:
+      - npm run build-storybook
+
   frontend-test-build:
     desc: Test static build and serve locally
     deps: [frontend-build-static]
@@ -418,14 +476,23 @@ tasks:
         echo "  task frontend-logs   - Show frontend logs"
         echo ""
         echo "Frontend (Development):"
-        echo "  task frontend-install      - Install frontend dependencies"
-        echo "  task frontend-dev          - Run frontend in development mode"
-        echo "  task frontend-build-static - Build for static export (SPA)"
-        echo "  task frontend-serve-static - Serve static build locally"
-        echo "  task frontend-lint         - Run linting"
-        echo "  task frontend-format       - Format code"
-        echo "  task frontend-analyze      - Analyze bundle size"
-        echo "  task frontend-test-build   - Test static build locally"
+        echo "  task frontend-install        - Install frontend dependencies"
+        echo "  task frontend-dev            - Run frontend in development mode"
+        echo "  task frontend-build-static   - Build for static export (SPA)"
+        echo "  task frontend-serve-static   - Serve static build locally"
+        echo "  task frontend-lint           - Run linting"
+        echo "  task frontend-format         - Format code"
+        echo "  task frontend-test           - Run unit tests"
+        echo "  task frontend-test-watch     - Run unit tests in watch mode"
+        echo "  task frontend-test-coverage  - Generate test coverage report"
+        echo "  task frontend-test-e2e       - Run E2E tests"
+        echo "  task frontend-test-e2e-ui    - Run E2E tests with UI"
+        echo "  task frontend-quality-check  - Run all quality checks (lint + tests)"
+        echo "  task frontend-quality-fix    - Run all quality checks with auto-fix"
+        echo "  task frontend-storybook      - Start Storybook development server"
+        echo "  task frontend-build-storybook - Build Storybook for production"
+        echo "  task frontend-analyze        - Analyze bundle size"
+        echo "  task frontend-test-build     - Test static build locally"
         echo ""
         echo "CDK Infrastructure:"
         echo "  task cdk-install         - Install CDK dependencies"

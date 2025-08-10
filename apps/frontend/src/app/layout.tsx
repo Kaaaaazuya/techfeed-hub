@@ -14,7 +14,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: 'TechFeed Hub',
-  description: 'AI-summarized, personalizable tech blog aggregation service for engineers',
+  description:
+    'AI-summarized, personalizable tech blog aggregation service for engineers',
 }
 
 export default function RootLayout({

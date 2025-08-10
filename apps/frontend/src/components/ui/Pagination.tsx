@@ -12,7 +12,7 @@ export default function Pagination({
   currentPage,
   totalPages,
   onPageChange,
-  className = ''
+  className = '',
 }: PaginationProps) {
   const [isMobile, setIsMobile] = useState(false)
 

@@ -15,11 +15,13 @@ export default function Home() {
     <Layout>
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8">
         <div className="space-y-6">
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">最新の技術記事</h1>
-          <ArticleList 
-            page={currentPage} 
-            size={10} 
-            onPageChange={handlePageChange} 
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
+            最新の技術記事
+          </h1>
+          <ArticleList
+            page={currentPage}
+            size={10}
+            onPageChange={handlePageChange}
           />
         </div>
       </div>

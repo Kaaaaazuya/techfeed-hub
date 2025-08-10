@@ -14,7 +14,11 @@ interface ArticleListProps {
   onPageChange?: (page: number) => void
 }
 
-export default function ArticleList({ page = 0, size = 10, onPageChange }: ArticleListProps) {
+export default function ArticleList({
+  page = 0,
+  size = 10,
+  onPageChange,
+}: ArticleListProps) {
   const { data, error, isLoading, mutate } = useSWR<ArticleListResponse>(
     getArticlesUrl({ page, size }),
     fetcher
@@ -59,7 +63,7 @@ export default function ArticleList({ page = 0, size = 10, onPageChange }: Artic
           <Pagination
             currentPage={data.page + 1}
             totalPages={data.totalPages}
-            onPageChange={(pageNum) => onPageChange(pageNum - 1)}
+            onPageChange={pageNum => onPageChange(pageNum - 1)}
             className="justify-center"
           />
         </div>

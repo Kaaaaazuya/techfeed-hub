@@ -8,28 +8,28 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 const nextConfig: NextConfig = {
   // Configure for static export (SPA mode)
   output: 'export',
-  
+
   // Disable server-side features for static export
   trailingSlash: true,
   skipTrailingSlashRedirect: true,
-  
+
   // Image optimization for static export
   images: {
     unoptimized: true, // Required for static export
   },
-  
+
   // Base path for deployment (can be configured for S3/CloudFront)
   // basePath: process.env.NEXT_PUBLIC_BASE_PATH || '',
-  
+
   // Asset prefix for CDN deployment
   // assetPrefix: process.env.NEXT_PUBLIC_ASSET_PREFIX || '',
-  
+
   // Disable server-side features
   experimental: {
     // Enable static exports
     esmExternals: true,
   },
-  
+
   // Configure webpack for better optimization
   webpack: (config, { isServer }) => {
     if (!isServer) {

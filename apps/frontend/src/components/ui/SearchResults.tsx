@@ -17,7 +17,7 @@ interface SearchResultsProps {
 export default function SearchResults({
   searchParams,
   onPageChange,
-  onClearSearch
+  onClearSearch,
 }: SearchResultsProps) {
   const { data, error, isLoading, mutate } = useSWR<SearchResponse>(
     getSearchUrl(searchParams),
@@ -28,9 +28,7 @@ export default function SearchResults({
     return (
       <div className="space-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-xl font-semibold text-gray-900">
-            検索結果
-          </h2>
+          <h2 className="text-xl font-semibold text-gray-900">検索結果</h2>
           <button
             onClick={onClearSearch}
             className="text-sm text-blue-600 hover:text-blue-800"
@@ -47,9 +45,7 @@ export default function SearchResults({
     return (
       <div className="space-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-xl font-semibold text-gray-900">
-            検索中...
-          </h2>
+          <h2 className="text-xl font-semibold text-gray-900">検索中...</h2>
           <button
             onClick={onClearSearch}
             className="text-sm text-blue-600 hover:text-blue-800"
@@ -66,9 +62,7 @@ export default function SearchResults({
     return (
       <div className="space-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-xl font-semibold text-gray-900">
-            検索結果
-          </h2>
+          <h2 className="text-xl font-semibold text-gray-900">検索結果</h2>
           <button
             onClick={onClearSearch}
             className="text-sm text-blue-600 hover:text-blue-800"
@@ -76,7 +70,7 @@ export default function SearchResults({
             検索をクリア
           </button>
         </div>
-        
+
         <div className="text-center py-12">
           <div className="mb-4">
             <svg
@@ -117,13 +111,14 @@ export default function SearchResults({
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div className="space-y-1">
-          <h2 className="text-xl font-semibold text-gray-900">
-            検索結果
-          </h2>
+          <h2 className="text-xl font-semibold text-gray-900">検索結果</h2>
           <p className="text-sm text-gray-600">
             「{searchParams.query}」の検索結果: {data.totalElements}件
             {data.totalPages > 1 && (
-              <span> (ページ {data.page + 1}/{data.totalPages})</span>
+              <span>
+                {' '}
+                (ページ {data.page + 1}/{data.totalPages})
+              </span>
             )}
           </p>
         </div>
@@ -148,7 +143,7 @@ export default function SearchResults({
           <Pagination
             currentPage={data.page + 1}
             totalPages={data.totalPages}
-            onPageChange={(pageNum) => onPageChange(pageNum - 1)}
+            onPageChange={pageNum => onPageChange(pageNum - 1)}
             className="justify-center"
           />
         </div>

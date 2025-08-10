@@ -19,11 +19,13 @@ export default function ArticleDetailClient() {
             <div className="text-6xl text-gray-300">📄</div>
             <h1 className="text-2xl font-bold text-gray-900">記事詳細</h1>
             <p className="text-gray-600">
-              記事ID: <code className="bg-gray-100 px-2 py-1 rounded">{articleId}</code>
+              記事ID:{' '}
+              <code className="bg-gray-100 px-2 py-1 rounded">{articleId}</code>
             </p>
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
               <p className="text-blue-800">
-                現在、記事詳細ページは実装準備中です。<br />
+                現在、記事詳細ページは実装準備中です。
+                <br />
                 記事を読むには、記事一覧からリンクをクリックして外部サイトにアクセスしてください。
               </p>
             </div>
@@ -32,8 +34,18 @@ export default function ArticleDetailClient() {
                 href="/"
                 className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
               >
-                <svg className="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                <svg
+                  className="w-4 h-4 mr-2"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M10 19l-7-7m0 0l7-7m-7 7h18"
+                  />
                 </svg>
                 記事一覧に戻る
               </Link>

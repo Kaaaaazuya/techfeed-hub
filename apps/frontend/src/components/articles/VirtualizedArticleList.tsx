@@ -14,16 +14,16 @@ interface VirtualizedArticleListProps {
   searchQuery?: string
 }
 
-export default function VirtualizedArticleList({ 
-  initialPage = 0, 
-  pageSize = 20, 
-  searchQuery 
+export default function VirtualizedArticleList({
+  initialPage = 0,
+  pageSize = 20,
+  searchQuery,
 }: VirtualizedArticleListProps) {
   const [currentPage, setCurrentPage] = useState(initialPage)
   const [allArticles, setAllArticles] = useState<Article[]>([])
   const [hasMore, setHasMore] = useState(true)
 
-  const apiUrl = searchQuery 
+  const apiUrl = searchQuery
     ? getSearchUrl({ query: searchQuery, page: currentPage, size: pageSize })
     : getArticlesUrl({ page: currentPage, size: pageSize })
 
@@ -55,7 +55,10 @@ export default function VirtualizedArticleList({
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight) {
+      if (
+        window.innerHeight + document.documentElement.scrollTop !==
+        document.documentElement.offsetHeight
+      ) {
         return
       }
       loadMore()
@@ -78,10 +81,9 @@ export default function VirtualizedArticleList({
       <div className="text-center py-12">
         <h2 className="text-xl text-gray-600 mb-4">記事がありません</h2>
         <p className="text-gray-500">
-          {searchQuery 
+          {searchQuery
             ? 'お探しの記事が見つかりませんでした。別のキーワードで検索してください。'
-            : 'RSS取得バッチを実行して記事をデータベースに保存してください。'
-          }
+            : 'RSS取得バッチを実行して記事をデータベースに保存してください。'}
         </p>
       </div>
     )

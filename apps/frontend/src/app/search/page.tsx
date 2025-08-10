@@ -19,7 +19,9 @@ function SearchPageFallback() {
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8">
       <div className="space-y-8">
         <div className="space-y-4">
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">記事検索</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
+            記事検索
+          </h1>
           <div className="w-full h-12 bg-gray-200 rounded-lg animate-pulse"></div>
         </div>
         <div className="bg-white rounded-lg shadow-sm border p-8 animate-pulse">
