@@ -31,8 +31,8 @@ export class TestTechfeedStack extends cdk.Stack {
           cidrMask: 24,
           name: 'Private',
           subnetType: ec2.SubnetType.PRIVATE_ISOLATED, // NAT不要な分離サブネット
-        }
-      ]
+        },
+      ],
     });
 
     // セキュリティグループ
@@ -48,16 +48,8 @@ export class TestTechfeedStack extends cdk.Stack {
     });
 
     // アプリからDBへのアクセス許可
-    dbSecurityGroup.addIngressRule(
-      appSecurityGroup,
-      ec2.Port.tcp(5432),
-      'Allow PostgreSQL access from app'
-    );
-    dbSecurityGroup.addIngressRule(
-      appSecurityGroup, 
-      ec2.Port.tcp(6379),
-      'Allow Redis access from app'
-    );
+    dbSecurityGroup.addIngressRule(appSecurityGroup, ec2.Port.tcp(5432), 'Allow PostgreSQL access from app');
+    dbSecurityGroup.addIngressRule(appSecurityGroup, ec2.Port.tcp(6379), 'Allow Redis access from app');
 
     // RDS PostgreSQL - 無料枠活用
     const database = new rds.DatabaseInstance(this, 'TechfeedDB', {
@@ -84,7 +76,7 @@ export class TestTechfeedStack extends cdk.Stack {
     const redisSubnetGroup = new elasticache.CfnSubnetGroup(this, 'RedisSubnetGroup', {
       description: 'Subnet group for Redis cluster',
       subnetIds: vpc.selectSubnets({
-        subnetType: ec2.SubnetType.PRIVATE_ISOLATED
+        subnetType: ec2.SubnetType.PRIVATE_ISOLATED,
       }).subnetIds,
     });
 
@@ -141,12 +133,12 @@ export class TestTechfeedStack extends cdk.Stack {
         {
           capacityProvider: 'FARGATE_SPOT', // Spotインスタンス使用でコスト削減
           weight: 1,
-        }
+        },
       ],
     });
 
     // API Service の Security Group 設定
-    apiService.service.connections.securityGroups.forEach(sg => {
+    apiService.service.connections.securityGroups.forEach((sg) => {
       appSecurityGroup.connections.allowFrom(sg, ec2.Port.allTraffic());
     });
 

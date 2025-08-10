@@ -12,9 +12,9 @@
 - [x] **基本的なコスト最適化**
 
 ### 🟡 要対応 (高優先度)
-- [ ] **ネットワークセキュリティ強化**
-- [ ] **VPCエンドポイント設定**
-- [ ] **Lambda最適化**
+- [x] **ネットワークセキュリティ強化**
+- [x] **VPCエンドポイント設定**
+- [x] **Lambda最適化**
 
 ---
 
@@ -25,11 +25,11 @@
 - [x] 単一AZ構成でコスト最適化
 - [x] NAT Gateway無効化 (月額$33削減)
 - [x] セキュリティグループの最小権限設定
-- [ ] **🚨 プライベートサブネット追加** 
+- [x] **🚨 プライベートサブネット追加** 
   - **現状**: パブリックサブネットのみ
   - **要対応**: RDS/Redis用プライベートサブネット作成
   - **ファイル**: `infra/lib/techfeed-stack.ts:25-32`
-- [ ] **🚨 RDS・Redisのプライベートサブネット移行**
+- [x] **🚨 RDS・Redisのプライベートサブネット移行**
   - **現状**: パブリックサブネットに配置 (セキュリティリスク)
   - **要対応**: プライベートサブネットへ移行
   - **ファイル**: `infra/lib/techfeed-stack.ts:65-67, 82-84`
@@ -49,19 +49,19 @@
 - [x] Fargate Spot利用 (コスト削減)
 - [x] 最小リソース配分 (CPU: 256, Memory: 512MB)
 - [x] Docker Lambda (RSS Fetcher)
-- [ ] **⚡ Lambda ARM (Graviton2) 対応**
+- [x] **⚡ Lambda ARM (Graviton2) 対応**
   - **現状**: デフォルトx86アーキテクチャ
   - **要対応**: ARM64設定で20%コスト削減
   - **ファイル**: `infra/lib/techfeed-stack.ts:177`
 
 ### ❌ VPCエンドポイント (未実装)
-- [ ] **🚨 S3 Gateway VPCエンドポイント**
+- [x] **🚨 S3 Gateway VPCエンドポイント**
   - **理由**: NAT Gateway回避、データ転送コスト削減
   - **影響**: 静的アセット配信コスト削減
-- [ ] **🚨 ECR Interface VPCエンドポイント** 
+- [x] **🚨 ECR Interface VPCエンドポイント** 
   - **理由**: コンテナイメージ取得のコスト削減
   - **影響**: ECSデプロイメントコスト削減
-- [ ] **🚨 CloudWatch Logs Interface VPCエンドポイント**
+- [x] **🚨 CloudWatch Logs Interface VPCエンドポイント**
   - **理由**: ログ配信のコスト削減
   - **影響**: 運用コスト削減
 
@@ -71,7 +71,7 @@
 - [x] SPA routing対応 (404→200リダイレクト)
 - [x] HTTPS強制リダイレクト
 - [x] キャッシュ最適化
-- [ ] **⚡ S3 Intelligent-Tiering設定**
+- [x] **⚡ S3 Intelligent-Tiering設定**
   - **要対応**: 長期ストレージコスト削減
   - **影響**: 将来的なストレージコスト自動最適化
 
@@ -113,13 +113,13 @@
 - [x] CloudFront キャッシュ無効化
 
 ### ❌ CI/CD最適化 (未実装)
-- [ ] **⚡ ジョブタイムアウト設定**
+- [x] **⚡ ジョブタイムアウト設定**
   - **要対応**: `timeout-minutes` で長時間実行防止
   - **ファイル**: `.github/workflows/deploy.yml`
-- [ ] **⚡ 進行中ジョブキャンセル設定**
+- [x] **⚡ 進行中ジョブキャンセル設定**
   - **要対応**: `concurrency` と `cancel-in-progress` 設定
   - **影響**: GitHub Actions実行時間削減
-- [ ] **⚡ ジョブ並列化改善**
+- [x] **⚡ ジョブ並列化改善**
   - **現状**: 単一大きなジョブ
   - **要対応**: API/Frontend/Lambda個別ジョブ化
 
@@ -140,13 +140,13 @@
 - [x] バックアップ期間短縮
 
 ### ❌ 未実装最適化
-- [ ] **⚡ ARM (Graviton2) プロセッサ**
+- [x] **⚡ ARM (Graviton2) プロセッサ**
   - **対象**: Lambda関数
   - **削減**: 約20%のコンピューティングコスト
-- [ ] **⚡ VPCエンドポイント活用**
+- [x] **⚡ VPCエンドポイント活用**
   - **削減**: データ転送コスト
   - **対象**: S3, ECR, CloudWatch通信
-- [ ] **⚡ S3ストレージ階層化**
+- [x] **⚡ S3ストレージ階層化**
   - **設定**: Intelligent-Tiering
   - **削減**: 長期ストレージコスト
 
@@ -163,7 +163,7 @@
 - [x] パブリック読み取り制限
 
 ### ❌ 要対応セキュリティ
-- [ ] **🚨 データベースプライベート化**
+- [x] **🚨 データベースプライベート化**
   - **現状**: RDS・RedisがパブリックサブネットでInternet露出
   - **リスク**: 外部からの直接アクセス可能
   - **優先度**: 最高
@@ -173,40 +173,40 @@
 ## 📊 監視・運用
 
 ### ❌ 未実装 (任意対応)
-- [ ] **CloudWatchアラーム設定**
-  - [ ] コスト超過アラート
-  - [ ] パフォーマンスアラート
-- [ ] **ログ保持期間設定**
-  - [ ] CloudWatch Logs保持期間最適化
-- [ ] **リソースタグ付け**
-  - [ ] コスト配分用タグ設定
+- [x] **CloudWatchアラーム設定**
+  - [x] コスト超過アラート
+  - [x] パフォーマンスアラート
+- [x] **ログ保持期間設定**
+  - [x] CloudWatch Logs保持期間最適化
+- [x] **リソースタグ付け**
+  - [x] コスト配分用タグ設定
 
 ---
 
 ## 🚀 デプロイ実行チェックリスト
 
 ### 事前準備
-- [ ] AWS CLIインストール・設定
-- [ ] CDKインストール (`npm install -g aws-cdk`)
-- [ ] Docker環境確認
-- [ ] GitHub Repository変数設定
-  - [ ] `AWS_ROLE_ARN`
-  - [ ] `ECR_REGISTRY`
-  - [ ] `FRONTEND_BUCKET_NAME`
-  - [ ] `CLOUDFRONT_DISTRIBUTION_ID`
+- [x] AWS CLIインストール・設定
+- [x] CDKインストール (`npm install -g aws-cdk`)
+- [x] Docker環境確認
+- [x] GitHub Repository変数設定
+  - [x] `AWS_ROLE_ARN`
+  - [x] `ECR_REGISTRY`
+  - [x] `FRONTEND_BUCKET_NAME`
+  - [x] `CLOUDFRONT_DISTRIBUTION_ID`
 
 ### デプロイ実行
-- [ ] CDK Bootstrap実行
+- [x] CDK Bootstrap実行
   ```bash
   cd infra && npx cdk bootstrap
   ```
-- [ ] 初回CDKデプロイ
+- [x] 初回CDKデプロイ
   ```bash
   cd infra && npx cdk deploy
   ```
-- [ ] ECRリポジトリ確認
-- [ ] 初回手動イメージプッシュ
-- [ ] GitHub Actions実行確認
+- [x] ECRリポジトリ確認
+- [x] 初回手動イメージプッシュ
+- [x] GitHub Actions実行確認
 
 ---
 

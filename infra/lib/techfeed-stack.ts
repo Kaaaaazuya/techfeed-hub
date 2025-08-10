@@ -12,7 +12,7 @@ import * as s3 from 'aws-cdk-lib/aws-s3';
 import * as cloudfront from 'aws-cdk-lib/aws-cloudfront';
 import * as origins from 'aws-cdk-lib/aws-cloudfront-origins';
 import * as ecr from 'aws-cdk-lib/aws-ecr';
-import * as s3deploy from 'aws-cdk-lib/aws-s3-deployment';
+
 
 export class TechfeedStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
@@ -27,8 +27,36 @@ export class TechfeedStack extends cdk.Stack {
           cidrMask: 24,
           name: 'Public',
           subnetType: ec2.SubnetType.PUBLIC,
-        }
-      ]
+        },
+        {
+          cidrMask: 24,
+          name: 'Private',
+          subnetType: ec2.SubnetType.PRIVATE_WITH_EGRESS,
+        },
+      ],
+    });
+
+    // NAT Gatewayの代わりにNATインスタンスを利用することで、さらなるコスト削減が可能です。
+    // 個人開発レベルではNATインスタンスで十分な場合が多いです。
+
+    // S3 Gateway VPC Endpoint
+    vpc.addGatewayEndpoint('S3Endpoint', {
+      service: ec2.GatewayVpcEndpointAwsService.S3,
+    });
+
+    // ECR Interface VPC Endpoint
+    vpc.addInterfaceEndpoint('EcrEndpoint', {
+      service: ec2.InterfaceVpcEndpointAwsService.ECR,
+    });
+
+    // ECR DKR Interface VPC Endpoint
+    vpc.addInterfaceEndpoint('EcrDkrEndpoint', {
+      service: ec2.InterfaceVpcEndpointAwsService.ECR_DOCKER,
+    });
+
+    // CloudWatch Logs Interface VPC Endpoint
+    vpc.addInterfaceEndpoint('CloudWatchLogsEndpoint', {
+      service: ec2.InterfaceVpcEndpointAwsService.CLOUDWATCH_LOGS,
     });
 
     // セキュリティグループ（単一パブリックサブネット用）
@@ -44,16 +72,8 @@ export class TechfeedStack extends cdk.Stack {
     });
 
     // アプリからDBへのアクセス許可（同一サブネット内通信）
-    dbSecurityGroup.addIngressRule(
-      appSecurityGroup,
-      ec2.Port.tcp(5432),
-      'Allow PostgreSQL access from app services'
-    );
-    dbSecurityGroup.addIngressRule(
-      appSecurityGroup, 
-      ec2.Port.tcp(6379),
-      'Allow Redis access from app services'
-    );
+    dbSecurityGroup.addIngressRule(appSecurityGroup, ec2.Port.tcp(5432), 'Allow PostgreSQL access from app services');
+    dbSecurityGroup.addIngressRule(appSecurityGroup, ec2.Port.tcp(6379), 'Allow Redis access from app services');
 
     // RDS PostgreSQL - 個人利用向け最小構成
     const database = new rds.DatabaseInstance(this, 'TechfeedDB', {
@@ -63,7 +83,7 @@ export class TechfeedStack extends cdk.Stack {
       instanceType: ec2.InstanceType.of(ec2.InstanceClass.T3, ec2.InstanceSize.MICRO), // 無料枠
       vpc,
       vpcSubnets: {
-        subnetType: ec2.SubnetType.PUBLIC, // パブリックサブネットに配置
+        subnetType: ec2.SubnetType.PRIVATE_WITH_EGRESS, // プライベートサブネットに配置
       },
       securityGroups: [dbSecurityGroup],
       databaseName: 'techfeed_hub',
@@ -80,7 +100,7 @@ export class TechfeedStack extends cdk.Stack {
     const redisSubnetGroup = new elasticache.CfnSubnetGroup(this, 'RedisSubnetGroup', {
       description: 'Subnet group for Redis cluster',
       subnetIds: vpc.selectSubnets({
-        subnetType: ec2.SubnetType.PUBLIC
+        subnetType: ec2.SubnetType.PRIVATE_WITH_EGRESS,
       }).subnetIds,
     });
 
@@ -137,12 +157,12 @@ export class TechfeedStack extends cdk.Stack {
         {
           capacityProvider: 'FARGATE_SPOT', // Spotインスタンス使用でコスト削減
           weight: 1,
-        }
+        },
       ],
     });
 
     // API Service の Security Group 設定
-    apiService.service.connections.securityGroups.forEach(sg => {
+    apiService.service.connections.securityGroups.forEach((sg) => {
       appSecurityGroup.connections.allowFrom(sg, ec2.Port.allTraffic());
     });
 
@@ -179,6 +199,7 @@ export class TechfeedStack extends cdk.Stack {
         tagOrDigest: 'latest',
         cmd: ['rssfetcher.lambda.RssLambdaHandler::handleRequest'],
       }),
+      architecture: lambda.Architecture.ARM_64,
       timeout: cdk.Duration.minutes(15), // Lambda最大実行時間
       memorySize: 512, // メモリ削減でコスト最適化
       environment: {
@@ -191,7 +212,7 @@ export class TechfeedStack extends cdk.Stack {
       },
       vpc,
       vpcSubnets: {
-        subnetType: ec2.SubnetType.PUBLIC, // パブリックサブネットに配置
+        subnetType: ec2.SubnetType.PRIVATE_WITH_EGRESS,
       },
       securityGroups: [appSecurityGroup],
     });
