@@ -208,7 +208,7 @@ describe('TechfeedStack Integration Tests', () => {
       const s3Bucket = template.findResources('AWS::S3::Bucket');
       
       // Development resources should have DESTROY removal policy
-      expect(Object.keys(ecrRepo)).toHaveLength(1);
+      expect(Object.keys(ecrRepo)).toHaveLength(2); // API and RSS repositories
       expect(Object.keys(s3Bucket)).toHaveLength(1);
     });
 
@@ -234,7 +234,9 @@ describe('TechfeedStack Integration Tests', () => {
       expect(outputs.RedisEndpoint).toBeDefined();
       expect(outputs.ApiLoadBalancerUrl).toBeDefined();
       expect(outputs.FrontendUrl).toBeDefined();
-      expect(outputs.EcrRepositoryUri).toBeDefined();
+      expect(outputs.EcrApiRepositoryUri).toBeDefined();
+      expect(outputs.EcrRssRepositoryUri).toBeDefined();
+      expect(outputs.RssLambdaFunctionName).toBeDefined();
     });
   });
 

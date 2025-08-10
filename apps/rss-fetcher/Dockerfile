@@ -22,20 +22,11 @@ COPY app/src ./app/src
 # Build the application
 RUN ./gradlew build
 
-# Runtime stage
-FROM eclipse-temurin:21-jre
-
-WORKDIR /app
+# Lambda Runtime stage - AWS Lambda base image for Java
+FROM public.ecr.aws/lambda/java:21
 
 # Copy the built jar from the build stage
-COPY --from=build /app/app/build/libs/*.jar app.jar
+COPY --from=build /app/app/build/libs/*.jar ${LAMBDA_TASK_ROOT}/
 
-# Create a non-root user
-RUN groupadd -r appuser && useradd -r -g appuser appuser
-RUN chown -R appuser:appuser /app
-USER appuser
-
-# Default command runs the batch processor for today
-# Can be overridden with docker run arguments
-ENTRYPOINT ["java", "-jar", "app.jar"]
-CMD []
+# Set the CMD to your handler (could also be done as a parameter override outside of the Dockerfile)
+CMD [ "rssfetcher.lambda.RssLambdaHandler::handleRequest" ]

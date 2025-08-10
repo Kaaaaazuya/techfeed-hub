@@ -2,21 +2,23 @@ package rssfetcher.lambda;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
+import com.amazonaws.services.lambda.runtime.events.ScheduledEvent;
+import rssfetcher.aws.DatabaseSecrets;
 import rssfetcher.batch.RssBatchProcessor;
 
 import java.time.LocalDate;
 import java.util.Map;
 
-public class RssLambdaHandler implements RequestHandler<Map<String, Object>, String> {
+public class RssLambdaHandler implements RequestHandler<ScheduledEvent, String> {
 
     @Override
-    public String handleRequest(Map<String, Object> event, Context context) {
+    public String handleRequest(ScheduledEvent event, Context context) {
         String functionName = context.getFunctionName();
         String requestId = context.getAwsRequestId();
         
         context.getLogger().log(String.format(
-            "Starting RSS fetching Lambda: %s, RequestId: %s",
-            functionName, requestId
+            "Starting RSS fetching Lambda: %s, RequestId: %s, EventSource: %s",
+            functionName, requestId, event.getSource()
         ));
         
         try {
@@ -24,27 +26,40 @@ public class RssLambdaHandler implements RequestHandler<Map<String, Object>, Str
             String dbHost = System.getenv("DB_HOST");
             String dbPort = System.getenv("DB_PORT");
             String dbName = System.getenv("DB_NAME");
+            String dbSecretArn = System.getenv("DB_SECRET_ARN");
             
-            if (dbHost == null || dbPort == null || dbName == null) {
-                throw new RuntimeException("Missing required environment variables: DB_HOST, DB_PORT, DB_NAME");
+            if (dbHost == null || dbPort == null || dbName == null || dbSecretArn == null) {
+                throw new RuntimeException("Missing required environment variables: DB_HOST, DB_PORT, DB_NAME, DB_SECRET_ARN");
             }
             
+            // Secrets Manager から認証情報を取得
+            context.getLogger().log("Retrieving database credentials from Secrets Manager...");
+            DatabaseSecrets.DatabaseCredentials credentials = DatabaseSecrets.getCredentials(dbSecretArn);
+            
             context.getLogger().log(String.format(
-                "Database connection: %s:%s/%s", dbHost, dbPort, dbName
+                "Database connection: %s:%s/%s (User: %s)", dbHost, dbPort, dbName, credentials.username
             ));
             
-            // デフォルトは今日の日付、イベントから指定がある場合はそれを使用
+            // EventBridge detail から日付を取得、なければ今日の日付を使用
             LocalDate targetDate = LocalDate.now();
-            if (event.containsKey("date")) {
+            Map<String, Object> detail = event.getDetail();
+            
+            if (detail != null && detail.containsKey("date")) {
                 try {
-                    targetDate = LocalDate.parse(event.get("date").toString());
-                    context.getLogger().log("Processing RSS feeds for date: " + targetDate);
+                    targetDate = LocalDate.parse(detail.get("date").toString());
+                    context.getLogger().log("Processing RSS feeds for specified date: " + targetDate);
                 } catch (Exception e) {
-                    context.getLogger().log("Invalid date format in event, using today: " + e.getMessage());
+                    context.getLogger().log("Invalid date format in event detail, using today: " + e.getMessage());
                 }
             } else {
                 context.getLogger().log("Processing RSS feeds for today: " + targetDate);
             }
+            
+            // EventBridge event information をログ出力
+            context.getLogger().log(String.format(
+                "EventBridge Event - ID: %s, Source: %s, DetailType: %s, Time: %s",
+                event.getId(), event.getSource(), event.getDetailType(), event.getTime()
+            ));
             
             // RSS Batch Processor実行
             String[] args;
@@ -71,7 +86,12 @@ public class RssLambdaHandler implements RequestHandler<Map<String, Object>, Str
                 e.getMessage(), requestId
             );
             context.getLogger().log(errorMessage);
-            context.getLogger().log("Stack trace: " + java.util.Arrays.toString(e.getStackTrace()));
+            
+            // より詳細なスタックトレースをログ出力
+            context.getLogger().log("Exception details:");
+            for (StackTraceElement element : e.getStackTrace()) {
+                context.getLogger().log("  at " + element.toString());
+            }
             
             throw new RuntimeException(errorMessage, e);
         }

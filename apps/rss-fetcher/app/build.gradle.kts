@@ -51,6 +51,13 @@ dependencies {
     implementation("com.amazonaws:aws-lambda-java-core:1.2.3")
     implementation("com.amazonaws:aws-lambda-java-events:3.11.4")
     
+    // AWS SDK for Secrets Manager
+    implementation("software.amazon.awssdk:secretsmanager:2.20.26")
+    implementation("software.amazon.awssdk:regions:2.20.26")
+    
+    // JSON processing for secrets
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.15.2")
+    
     // SpotBugs annotations
     compileOnly("com.github.spotbugs:spotbugs-annotations:4.8.6")
 }

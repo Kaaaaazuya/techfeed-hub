@@ -5,6 +5,9 @@ import * as rds from 'aws-cdk-lib/aws-rds';
 import * as ecs from 'aws-cdk-lib/aws-ecs';
 import * as ecsPatterns from 'aws-cdk-lib/aws-ecs-patterns';
 import * as elasticache from 'aws-cdk-lib/aws-elasticache';
+import * as lambda from 'aws-cdk-lib/aws-lambda';
+import * as events from 'aws-cdk-lib/aws-events';
+import * as targets from 'aws-cdk-lib/aws-events-targets';
 import * as s3 from 'aws-cdk-lib/aws-s3';
 import * as cloudfront from 'aws-cdk-lib/aws-cloudfront';
 import * as origins from 'aws-cdk-lib/aws-cloudfront-origins';
@@ -94,9 +97,14 @@ export class TestTechfeedStack extends cdk.Stack {
       cacheSubnetGroupName: redisSubnetGroup.ref,
     });
 
-    // ECR Repository
+    // ECR Repositories
     const apiRepository = new ecr.Repository(this, 'TechfeedApiRepo', {
       repositoryName: 'techfeed-api',
+      removalPolicy: cdk.RemovalPolicy.DESTROY,
+    });
+
+    const rssRepository = new ecr.Repository(this, 'TechfeedRssRepo', {
+      repositoryName: 'techfeed-rss-fetcher',
       removalPolicy: cdk.RemovalPolicy.DESTROY,
     });
 
@@ -169,6 +177,42 @@ export class TestTechfeedStack extends cdk.Stack {
       ],
     });
 
+    // Lambda for RSS Fetching - Container Image
+    const rssLambda = new lambda.DockerImageFunction(this, 'RssFetcherLambda', {
+      code: lambda.DockerImageCode.fromEcr(rssRepository, {
+        tagOrDigest: 'latest',
+        cmd: ['rssfetcher.lambda.RssLambdaHandler::handleRequest'],
+      }),
+      timeout: cdk.Duration.minutes(15), // Lambda最大実行時間
+      memorySize: 1024, // RSS処理に必要なメモリ
+      environment: {
+        DB_HOST: database.instanceEndpoint.hostname,
+        DB_PORT: '5432',
+        DB_NAME: 'techfeed_hub',
+        REDIS_HOST: redisCluster.attrRedisEndpointAddress,
+        REDIS_PORT: '6379',
+        DB_SECRET_ARN: database.secret?.secretArn || '',
+      },
+      vpc,
+      vpcSubnets: {
+        subnetType: ec2.SubnetType.PRIVATE_ISOLATED,
+      },
+      securityGroups: [appSecurityGroup],
+    });
+
+    // Lambda にシークレット参照権限付与
+    database.secret?.grantRead(rssLambda);
+
+    // EventBridge Rule for RSS fetching schedule
+    const rssScheduleRule = new events.Rule(this, 'RssScheduleRule', {
+      schedule: events.Schedule.cron({
+        minute: '0',
+        hour: '*/3', // 3時間ごと実行
+      }),
+    });
+
+    rssScheduleRule.addTarget(new targets.LambdaFunction(rssLambda));
+
     // Outputs
     new cdk.CfnOutput(this, 'DatabaseEndpoint', {
       value: database.instanceEndpoint.hostname,
@@ -186,8 +230,16 @@ export class TestTechfeedStack extends cdk.Stack {
       value: distribution.distributionDomainName,
     });
 
-    new cdk.CfnOutput(this, 'EcrRepositoryUri', {
+    new cdk.CfnOutput(this, 'EcrApiRepositoryUri', {
       value: apiRepository.repositoryUri,
+    });
+
+    new cdk.CfnOutput(this, 'EcrRssRepositoryUri', {
+      value: rssRepository.repositoryUri,
+    });
+
+    new cdk.CfnOutput(this, 'RssLambdaFunctionName', {
+      value: rssLambda.functionName,
     });
   }
 }

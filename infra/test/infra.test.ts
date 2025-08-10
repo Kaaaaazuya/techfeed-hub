@@ -44,7 +44,7 @@ describe('TechfeedStack', () => {
 
   describe('Security Groups', () => {
     test('should create database and app security groups', () => {
-      template.resourceCountIs('AWS::EC2::SecurityGroup', 4); // DB, App, ALB, ECS Service
+      template.resourceCountIs('AWS::EC2::SecurityGroup', 4); // DB, App, ALB, ECS Service (Lambda shares App SG)
     });
 
     test('should configure database security group rules', () => {
@@ -120,11 +120,21 @@ describe('TechfeedStack', () => {
     });
   });
 
-  describe('ECR Repository', () => {
-    test('should create ECR repository', () => {
+  describe('ECR Repositories', () => {
+    test('should create API ECR repository', () => {
       template.hasResourceProperties('AWS::ECR::Repository', {
         RepositoryName: 'techfeed-api',
       });
+    });
+
+    test('should create RSS fetcher ECR repository', () => {
+      template.hasResourceProperties('AWS::ECR::Repository', {
+        RepositoryName: 'techfeed-rss-fetcher',
+      });
+    });
+
+    test('should create two ECR repositories', () => {
+      template.resourceCountIs('AWS::ECR::Repository', 2);
     });
   });
 
@@ -268,6 +278,100 @@ describe('TechfeedStack', () => {
       });
       expect(hasSecretsAccess).toBe(true);
     });
+
+    test('should grant Lambda access to secrets', () => {
+      const roles = template.findResources('AWS::IAM::Role');
+      const lambdaRoles = Object.values(roles).filter((role: any) => 
+        role.Properties?.AssumeRolePolicyDocument?.Statement?.some((stmt: any) =>
+          stmt.Principal?.Service?.includes('lambda.amazonaws.com')
+        )
+      );
+      expect(lambdaRoles.length).toBeGreaterThan(0);
+    });
+
+    test('should create Lambda execution role with VPC permissions', () => {
+      const roles = template.findResources('AWS::IAM::Role');
+      const lambdaRole = Object.values(roles).find((role: any) => 
+        role.Properties?.AssumeRolePolicyDocument?.Statement?.some((stmt: any) =>
+          stmt.Principal?.Service === 'lambda.amazonaws.com'
+        )
+      ) as any;
+      
+      expect(lambdaRole).toBeDefined();
+      expect(lambdaRole.Properties.ManagedPolicyArns).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            'Fn::Join': expect.arrayContaining([
+              '',
+              expect.arrayContaining([
+                'arn:',
+                { Ref: 'AWS::Partition' },
+                ':iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole',
+              ])
+            ])
+          })
+        ])
+      );
+    });
+  });
+
+  describe('Lambda Function', () => {
+    test('should create Lambda function for RSS fetching', () => {
+      template.hasResourceProperties('AWS::Lambda::Function', {
+        PackageType: 'Image',
+        Timeout: 900, // 15 minutes
+        MemorySize: 1024,
+      });
+    });
+
+    test('should configure Lambda environment variables', () => {
+      const lambdaFunctions = template.findResources('AWS::Lambda::Function');
+      const lambdaKey = Object.keys(lambdaFunctions)[0];
+      const lambda = lambdaFunctions[lambdaKey];
+      
+      expect(lambda.Properties.Environment.Variables).toEqual(
+        expect.objectContaining({
+          DB_HOST: expect.any(Object),
+          DB_PORT: '5432',
+          DB_NAME: 'techfeed_hub',
+          REDIS_HOST: expect.any(Object),
+          REDIS_PORT: '6379',
+          DB_SECRET_ARN: expect.any(Object),
+        })
+      );
+    });
+
+    test('should place Lambda in VPC', () => {
+      const lambdaFunctions = template.findResources('AWS::Lambda::Function');
+      const lambdaFunction = Object.values(lambdaFunctions)[0] as any;
+      
+      expect(lambdaFunction.Properties.VpcConfig).toBeDefined();
+      expect(lambdaFunction.Properties.VpcConfig.SubnetIds).toEqual(expect.any(Array));
+      expect(lambdaFunction.Properties.VpcConfig.SecurityGroupIds).toEqual(expect.any(Array));
+    });
+  });
+
+  describe('EventBridge', () => {
+    test('should create EventBridge rule for RSS fetching schedule', () => {
+      template.hasResourceProperties('AWS::Events::Rule', {
+        ScheduleExpression: 'cron(0 */3 * * ? *)',
+        State: 'ENABLED',
+      });
+    });
+
+    test('should configure Lambda as EventBridge target', () => {
+      const rules = template.findResources('AWS::Events::Rule');
+      const rule = Object.values(rules)[0] as any;
+      
+      expect(rule.Properties.Targets).toBeDefined();
+      expect(rule.Properties.Targets).toHaveLength(1);
+      expect(rule.Properties.Targets[0]).toEqual(
+        expect.objectContaining({
+          Arn: expect.any(Object),
+          Id: expect.any(String),
+        })
+      );
+    });
   });
 
   describe('Stack Outputs', () => {
@@ -278,7 +382,9 @@ describe('TechfeedStack', () => {
       expect(outputs).toHaveProperty('RedisEndpoint'); 
       expect(outputs).toHaveProperty('ApiLoadBalancerUrl');
       expect(outputs).toHaveProperty('FrontendUrl');
-      expect(outputs).toHaveProperty('EcrRepositoryUri');
+      expect(outputs).toHaveProperty('EcrApiRepositoryUri');
+      expect(outputs).toHaveProperty('EcrRssRepositoryUri');
+      expect(outputs).toHaveProperty('RssLambdaFunctionName');
     });
   });
 

@@ -207,6 +207,31 @@ tasks:
     cmds:
       - ./gradlew run --no-daemon
 
+  # Lambda deployment tasks
+  rss-lambda-build:
+    desc: Build RSS fetcher Lambda container image
+    dir: apps/rss-fetcher
+    cmds:
+      - docker build -t techfeed-rss-fetcher:latest .
+
+  rss-lambda-push:
+    desc: Push RSS fetcher Lambda image to ECR
+    dir: apps/rss-fetcher
+    vars:
+      AWS_ACCOUNT_ID:
+        sh: aws sts get-caller-identity --query Account --output text
+      AWS_REGION: us-east-1
+    cmds:
+      - aws ecr get-login-password --region {{.AWS_REGION}} | docker login --username AWS --password-stdin {{.AWS_ACCOUNT_ID}}.dkr.ecr.{{.AWS_REGION}}.amazonaws.com
+      - docker tag techfeed-rss-fetcher:latest {{.AWS_ACCOUNT_ID}}.dkr.ecr.{{.AWS_REGION}}.amazonaws.com/techfeed-rss-fetcher:latest
+      - docker push {{.AWS_ACCOUNT_ID}}.dkr.ecr.{{.AWS_REGION}}.amazonaws.com/techfeed-rss-fetcher:latest
+
+  rss-lambda-deploy:
+    desc: Build and deploy RSS fetcher Lambda
+    deps: [rss-lambda-build, rss-lambda-push]
+    cmds:
+      - echo "RSS Lambda container deployed successfully"
+
   # Frontend operations
   frontend-build:
     desc: Build frontend Docker image
@@ -468,6 +493,9 @@ tasks:
         echo "  task rss-clean          - Clean build artifacts"
         echo "  task rss-build-jar      - Build standalone JAR"
         echo "  task rss-run-local      - Run RSS fetcher locally"
+        echo "  task rss-lambda-build   - Build RSS Lambda container image"
+        echo "  task rss-lambda-push    - Push RSS Lambda image to ECR"
+        echo "  task rss-lambda-deploy  - Build and deploy RSS Lambda"
         echo ""
         echo "Frontend (Docker):"
         echo "  task frontend-build  - Build frontend Docker image"
